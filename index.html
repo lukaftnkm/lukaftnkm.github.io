@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luka Đelošević — ECE Engineer & Innovator</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0a0e17;
+    --bg-secondary: #111827;
+    --bg-card: #141c2e;
+    --accent: #00d4ff;
+    --accent-glow: rgba(0, 212, 255, 0.15);
+    --accent-warm: #7c3aed;
+    --accent-green: #10b981;
+    --accent-amber: #f59e0b;
+    --text-primary: #e8ecf4;
+    --text-secondary: #8b95a8;
+    --text-dim: #4b5563;
+    --border: rgba(255,255,255,0.06);
+    --border-accent: rgba(0, 212, 255, 0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ─── GRID BACKGROUND ─── */
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .grid-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(0,212,255,0.06) 0%, transparent 60%);
+  }
+
+  /* ─── FLOATING CIRCUIT NODES ─── */
+  .circuit-nodes {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .node {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    opacity: 0;
+    animation: nodePulse 4s ease-in-out infinite;
+  }
+
+  .node::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,212,255,0.2), transparent 70%);
+  }
+
+  .node:nth-child(1) { top: 15%; left: 8%; animation-delay: 0s; }
+  .node:nth-child(2) { top: 35%; left: 92%; animation-delay: 1.2s; }
+  .node:nth-child(3) { top: 60%; left: 5%; animation-delay: 2.4s; }
+  .node:nth-child(4) { top: 80%; left: 88%; animation-delay: 0.6s; }
+  .node:nth-child(5) { top: 45%; left: 50%; animation-delay: 1.8s; }
+  .node:nth-child(6) { top: 10%; left: 70%; animation-delay: 3s; }
+
+  @keyframes nodePulse {
+    0%, 100% { opacity: 0; transform: scale(0.8); }
+    50% { opacity: 0.6; transform: scale(1.2); }
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1rem 2rem;
+    backdrop-filter: blur(20px);
+    background: rgba(10, 14, 23, 0.8);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+  }
+
+  .nav-logo span { color: var(--text-dim); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1.5px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 2rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero-content { max-width: 750px; }
+
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0;
+    animation: slideUp 0.6s ease forwards 0.2s;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 30px;
+    height: 1.5px;
+    background: var(--accent);
+  }
+
+  .hero-name {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: slideUp 0.6s ease forwards 0.4s;
+  }
+
+  .hero-name .accent { color: var(--accent); }
+  .hero-name .dim { color: var(--text-dim); }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    max-width: 550px;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: slideUp 0.6s ease forwards 0.6s;
+  }
+
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: slideUp 0.6s ease forwards 0.8s;
+  }
+
+  .badge {
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .badge-accent {
+    border-color: var(--border-accent);
+    background: var(--accent-glow);
+    color: var(--accent);
+  }
+
+  .badge-purple {
+    border-color: rgba(124,58,237,0.25);
+    background: rgba(124,58,237,0.1);
+    color: #a78bfa;
+  }
+
+  .badge-green {
+    border-color: rgba(16,185,129,0.25);
+    background: rgba(16,185,129,0.1);
+    color: #34d399;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    opacity: 0;
+    animation: slideUp 0.6s ease forwards 1s;
+  }
+
+  .btn {
+    padding: 0.85rem 2rem;
+    border-radius: 10px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg-primary);
+    border: none;
+    box-shadow: 0 0 30px rgba(0,212,255,0.2);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 0 50px rgba(0,212,255,0.35);
+    transform: translateY(-2px);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  /* ─── TERMINAL WIDGET ─── */
+  .hero-terminal {
+    position: absolute;
+    right: 2rem;
+    top: 55%;
+    transform: translateY(-50%);
+    width: 340px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    opacity: 0;
+    animation: slideLeft 0.8s ease forwards 1.2s;
+  }
+
+  .terminal-header {
+    padding: 0.75rem 1rem;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .terminal-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .terminal-dot.red { background: #ef4444; }
+  .terminal-dot.yellow { background: #f59e0b; }
+  .terminal-dot.green { background: #10b981; }
+
+  .terminal-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-left: 0.5rem;
+  }
+
+  .terminal-body {
+    padding: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    line-height: 1.8;
+  }
+
+  .terminal-line { margin-bottom: 0.25rem; }
+  .t-prompt { color: var(--accent); }
+  .t-cmd { color: var(--text-primary); }
+  .t-output { color: var(--text-secondary); }
+  .t-success { color: var(--accent-green); }
+  .t-warn { color: var(--accent-amber); }
+
+  .cursor-blink {
+    display: inline-block;
+    width: 7px;
+    height: 14px;
+    background: var(--accent);
+    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+    margin-left: 2px;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 20px;
+    height: 1.5px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 3rem;
+  }
+
+  /* ─── ABOUT ─── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .about-text {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .about-text strong { color: var(--text-primary); font-weight: 500; }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .stat-card:hover::before { opacity: 1; }
+
+  .stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+  }
+
+  /* ─── STARTUP ─── */
+  .startup-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .startup-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-warm), var(--accent-green));
+  }
+
+  .startup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .startup-brand {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .startup-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-warm));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    box-shadow: 0 8px 30px rgba(0,212,255,0.2);
+  }
+
+  .startup-name {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+
+  .startup-team {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+  }
+
+  .startup-team span { color: var(--accent); font-weight: 500; }
+
+  .startup-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    background: rgba(16,185,129,0.1);
+    border: 1px solid rgba(16,185,129,0.25);
+    font-size: 0.78rem;
+    color: #34d399;
+    font-weight: 500;
+  }
+
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
+    50% { opacity: 0.8; box-shadow: 0 0 0 8px rgba(16,185,129,0); }
+  }
+
+  .startup-desc {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    max-width: 700px;
+    font-weight: 300;
+  }
+
+  .startup-milestones {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .milestone {
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .milestone:hover {
+    border-color: var(--border-accent);
+    background: rgba(0,212,255,0.03);
+  }
+
+  .milestone-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .milestone-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .milestone-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+
+  /* ─── EDUCATION ─── */
+  .timeline {
+    position: relative;
+    padding-left: 3rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 0;
+    bottom: 0;
+    width: 1.5px;
+    background: linear-gradient(to bottom, var(--accent), var(--border));
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+    padding: 1.75rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    transition: all 0.3s ease;
+  }
+
+  .timeline-item:hover {
+    border-color: var(--border-accent);
+    transform: translateX(5px);
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.65rem;
+    top: 2rem;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--bg-primary);
+    border: 2.5px solid var(--accent);
+    z-index: 1;
+  }
+
+  .timeline-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+  }
+
+  .timeline-subtitle {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+
+  .timeline-tag {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.7rem;
+    border-radius: 100px;
+    background: rgba(124,58,237,0.1);
+    border: 1px solid rgba(124,58,237,0.25);
+    color: #a78bfa;
+    font-weight: 500;
+  }
+
+  /* ─── SKILLS ─── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .skill-group {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.75rem;
+    transition: all 0.3s ease;
+  }
+
+  .skill-group:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  }
+
+  .skill-group-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-tag {
+    padding: 0.4rem 0.85rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    font-weight: 400;
+    transition: all 0.2s;
+  }
+
+  .skill-tag:hover {
+    background: var(--accent-glow);
+    border-color: var(--border-accent);
+    color: var(--accent);
+  }
+
+  /* ─── AWARDS ─── */
+  .award-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .award-card:hover {
+    border-color: rgba(245,158,11,0.3);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+  }
+
+  .award-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-amber), transparent);
+  }
+
+  .award-trophy {
+    font-size: 3.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .award-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+  }
+
+  .award-detail {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+
+  .award-detail strong {
+    color: var(--accent-amber);
+    font-weight: 600;
+  }
+
+  /* ─── LANGUAGES ─── */
+  .lang-grid {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .lang-card {
+    flex: 1;
+    min-width: 160px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .lang-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-3px);
+  }
+
+  .lang-name {
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .lang-level {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+  }
+
+  .lang-bar {
+    width: 100%;
+    height: 3px;
+    background: var(--border);
+    border-radius: 10px;
+    margin-top: 0.75rem;
+    overflow: hidden;
+  }
+
+  .lang-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    background: var(--accent);
+    transition: width 1s ease;
+  }
+
+  /* ─── CONTACT ─── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .contact-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.75rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .contact-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  }
+
+  .contact-icon {
+    font-size: 1.5rem;
+  }
+
+  .contact-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .contact-value {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  footer span { color: var(--accent); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideLeft {
+    from { opacity: 0; transform: translate(30px, -50%); }
+    to { opacity: 1; transform: translate(0, -50%); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .hero-terminal { display: none; }
+    .about-grid { grid-template-columns: 1fr; }
+    .startup-milestones { grid-template-columns: 1fr; }
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: 0.75rem; }
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 0.75rem 1rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.25rem; }
+    .hero { padding: 6rem 1.25rem 3rem; }
+    .hero-cta { flex-direction: column; }
+    .startup-card { padding: 2rem; }
+    .about-stats { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Background Effects -->
+<div class="grid-bg"></div>
+<div class="circuit-nodes">
+  <div class="node"></div>
+  <div class="node"></div>
+  <div class="node"></div>
+  <div class="node"></div>
+  <div class="node"></div>
+  <div class="node"></div>
+</div>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-logo">luka<span>.dev</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#startup">Startup</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Electrical &amp; Computer Engineer</div>
+    <h1 class="hero-name">
+      Luka<br>
+      <span class="accent">Đelošević</span><span class="dim">.</span>
+    </h1>
+    <p class="hero-subtitle">
+      Master's student, award-winning innovator, and co-founder building the future at the intersection of engineering and entrepreneurship.
+    </p>
+    <div class="hero-badges">
+      <span class="badge badge-accent">🏆 InnovNation 2025 Winner</span>
+      <span class="badge badge-purple">🚀 Web Summit Qatar 2026</span>
+      <span class="badge badge-green">🎓 MSc ECE — In Progress</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#startup" class="btn btn-primary">Explore My Work ↓</a>
+      <a href="#contact" class="btn btn-ghost">Get In Touch</a>
+    </div>
+  </div>
+
+  <!-- Terminal Widget -->
+  <div class="hero-terminal">
+    <div class="terminal-header">
+      <div class="terminal-dot red"></div>
+      <div class="terminal-dot yellow"></div>
+      <div class="terminal-dot green"></div>
+      <span class="terminal-title">luka@portfolio ~ </span>
+    </div>
+    <div class="terminal-body">
+      <div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cmd">whoami</span></div>
+      <div class="terminal-line"><span class="t-output">Luka Đelošević</span></div>
+      <div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cmd">cat status.txt</span></div>
+      <div class="terminal-line"><span class="t-output">MSc ECE @ FTN Pristina</span></div>
+      <div class="terminal-line"><span class="t-output">Co-founder & CPO @ Sokolus</span></div>
+      <div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cmd">cat achievements.log</span></div>
+      <div class="terminal-line"><span class="t-success">✓ InnovNation 2025 — 1st Place</span></div>
+      <div class="terminal-line"><span class="t-success">✓ Web Summit Qatar 2026</span></div>
+      <div class="terminal-line"><span class="t-warn">⚡ Building Sokolus v1...</span></div>
+      <div class="terminal-line"><span class="t-prompt">$</span> <span class="cursor-blink"></span></div>
+    </div>
+  </div>
+</header>
+
+<!-- About -->
+<section id="about" class="reveal">
+  <div class="section-label">01 — About</div>
+  <h2 class="section-title">Engineering Meets<br>Entrepreneurship</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I'm a <strong>Master's student in Electrical and Computer Engineering</strong> at the Faculty of Technical Sciences, University of Pristina, with a strong focus on <strong>software development and web technologies</strong>.
+      </p>
+      <br>
+      <p>
+        My journey has taken me from <strong>Erasmus studies in Spain</strong> at Universidad de Vigo — where I worked on international projects and developed cross-cultural collaboration skills — to <strong>winning Serbia's national innovation competition</strong> and presenting our solution on the global stage at <strong>Web Summit Qatar 2026</strong>.
+      </p>
+      <br>
+      <p>
+        Now, alongside two colleagues, I'm turning our award-winning idea into a real product as co-founder of <strong>ikuDev</strong>. I'm driven by the belief that engineering talent, combined with entrepreneurial thinking, can build solutions that truly matter.
+      </p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-number">1st</div>
+        <div class="stat-label">National Innovation Competition</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Countries Studied / Worked In</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">5+</div>
+        <div class="stat-label">Programming Languages</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">v1</div>
+        <div class="stat-label">Working Prototype Built</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Startup -->
+<section id="startup" class="reveal">
+  <div class="section-label">02 — Startup</div>
+  <h2 class="section-title">Building Something Real</h2>
+  <div class="startup-card">
+    <div class="startup-header">
+      <div class="startup-brand">
+        <div class="startup-icon">S</div>
+        <div>
+          <div class="startup-name">Sokolus</div>
+          <div class="startup-team">by <span>ikuDev</span> — Team of 3 Innovators</div>
+        </div>
+      </div>
+      <div class="startup-status">
+        <div class="pulse-dot"></div>
+        Building v1 Prototype
+      </div>
+    </div>
+    <p class="startup-desc">
+      Sokolus is the award-winning digital solution born from ikuDev — a team of three engineers and innovators. After taking <strong>1st place at InnovNation Serbia 2025</strong>, we built our first working prototype and showcased it to investors, industry leaders, and the global tech community at <strong>Web Summit Qatar 2026</strong>.
+    </p>
+    <div class="startup-milestones">
+      <div class="milestone">
+        <div class="milestone-icon">🏆</div>
+        <div class="milestone-title">National 1st Place</div>
+        <div class="milestone-desc">InnovNation Serbia 2025 — Student Teams Category</div>
+      </div>
+      <div class="milestone">
+        <div class="milestone-icon">🌍</div>
+        <div class="milestone-title">Web Summit Qatar</div>
+        <div class="milestone-desc">Pitched to global investors and tech leaders in 2026</div>
+      </div>
+      <div class="milestone">
+        <div class="milestone-icon">⚡</div>
+        <div class="milestone-title">Prototype v1 Complete</div>
+        <div class="milestone-desc">Working MVP built and demonstrated live</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Education -->
+<section id="education" class="reveal">
+  <div class="section-label">03 — Education</div>
+  <h2 class="section-title">Academic Journey</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">2025 — Present</div>
+      <div class="timeline-title">MSc Electrical & Computer Engineering</div>
+      <div class="timeline-subtitle">Faculty of Technical Sciences, University of Pristina</div>
+      <span class="timeline-tag">Software Engineering & CS Focus</span>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2025</div>
+      <div class="timeline-title">Erasmus Exchange — Universidad de Vigo</div>
+      <div class="timeline-subtitle">International project work across multicultural teams, Spain</div>
+      <span class="timeline-tag">International Experience</span>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2021 — 2025</div>
+      <div class="timeline-title">BSc Electrical & Computer Engineering</div>
+      <div class="timeline-subtitle">Faculty of Technical Sciences, University of Pristina — Module: CS & Informatics</div>
+      <span class="timeline-tag">Computer Science</span>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills" class="reveal">
+  <div class="section-label">04 — Skills</div>
+  <h2 class="section-title">Technical Arsenal</h2>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-title">⌨️ Programming</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">PHP</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">C</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">🌐 Web Development</div>
+      <div class="skill-tags">
+        <span class="skill-tag">HTML</span>
+        <span class="skill-tag">CSS</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">React</span>
+        <span class="skill-tag">MySQL</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">🔧 Software & Tools</div>
+      <div class="skill-tags">
+        <span class="skill-tag">OOP</span>
+        <span class="skill-tag">MVC</span>
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">GitHub</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">🧠 Concepts & Beyond</div>
+      <div class="skill-tags">
+        <span class="skill-tag">AI & Data Basics</span>
+        <span class="skill-tag">Problem Solving</span>
+        <span class="skill-tag">Communication</span>
+        <span class="skill-tag">Team Leadership</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Awards -->
+<section id="awards" class="reveal">
+  <div class="section-label">05 — Recognition</div>
+  <h2 class="section-title">Awards & Languages</h2>
+  <div class="award-card">
+    <div class="award-trophy">🏆</div>
+    <div>
+      <div class="award-title">InnovNation Competition Serbia 2025</div>
+      <div class="award-detail">
+        <strong>1st Place</strong> — Student Teams Category<br>
+        National Innovation Competition · Project presented at Web Summit Qatar 2026
+      </div>
+    </div>
+  </div>
+  <div class="lang-grid">
+    <div class="lang-card">
+      <div class="lang-name">Serbian</div>
+      <div class="lang-level">Native</div>
+      <div class="lang-bar"><div class="lang-bar-fill" style="width: 100%"></div></div>
+    </div>
+    <div class="lang-card">
+      <div class="lang-name">English</div>
+      <div class="lang-level">Fluent</div>
+      <div class="lang-bar"><div class="lang-bar-fill" style="width: 90%"></div></div>
+    </div>
+    <div class="lang-card">
+      <div class="lang-name">Spanish</div>
+      <div class="lang-level">Basic</div>
+      <div class="lang-bar"><div class="lang-bar-fill" style="width: 30%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="reveal">
+  <div class="section-label">06 — Contact</div>
+  <h2 class="section-title">Let's Connect</h2>
+  <div class="contact-grid">
+    <a href="mailto:djelosevicluka002@gmail.com" class="contact-card">
+      <div class="contact-icon">✉️</div>
+      <div class="contact-label">Email</div>
+      <div class="contact-value">djelosevicluka002@gmail.com</div>
+    </a>
+    <a href="tel:+381658610815" class="contact-card">
+      <div class="contact-icon">📱</div>
+      <div class="contact-label">Phone</div>
+      <div class="contact-value">+381 65 861 0815</div>
+    </a>
+    <a href="https://linkedin.com/in/luka-djelosevic" target="_blank" class="contact-card">
+      <div class="contact-icon">💼</div>
+      <div class="contact-label">LinkedIn</div>
+      <div class="contact-value">luka-djelosevic</div>
+    </a>
+    <a href="https://github.com/lukaftnkm" target="_blank" class="contact-card">
+      <div class="contact-icon">🐙</div>
+      <div class="contact-label">GitHub</div>
+      <div class="contact-value">lukaftnkm</div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>Designed & built by <span>Luka Đelošević</span> · © 2026</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav background on scroll
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      nav.style.background = 'rgba(10, 14, 23, 0.95)';
+      nav.style.boxShadow = '0 4px 30px rgba(0,0,0,0.3)';
+    } else {
+      nav.style.background = 'rgba(10, 14, 23, 0.8)';
+      nav.style.boxShadow = 'none';
+    }
+  });
+</script>
+</body>
+</html>
