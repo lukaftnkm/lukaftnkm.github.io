@@ -4,6 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Luka Đelošević — ECE Engineer & Innovator</title>
+<meta name="description" content="Luka Đelošević — Master's student in Electrical & Computer Engineering, co-founder of Sokolus, InnovNation Serbia 2025 winner, and Web Summit Qatar 2026 speaker.">
+<meta name="keywords" content="Luka Đelošević, ECE engineer, software developer, Sokolus, InnovNation, portfolio, web development, React, Java, Python">
+<meta name="author" content="Luka Đelošević">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lukaftnkm.github.io/">
+<meta property="og:title" content="Luka Đelošević — ECE Engineer & Innovator">
+<meta property="og:description" content="Master's student, award-winning innovator, and co-founder building the future at the intersection of engineering and entrepreneurship.">
+<meta property="og:image" content="https://lukaftnkm.github.io/images/sokolus_with_text.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Luka Đelošević — ECE Engineer & Innovator">
+<meta name="twitter:description" content="Master's student, award-winning innovator, and co-founder building the future at the intersection of engineering and entrepreneurship.">
+<meta name="twitter:image" content="https://lukaftnkm.github.io/images/sokolus_with_text.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -930,9 +942,68 @@
     .nav-links a { font-size: 0.75rem; }
   }
 
+  /* ─── HAMBURGER ─── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 101;
+  }
+
+  .nav-hamburger span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: var(--text-primary);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+  }
+
+  .nav-hamburger.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .nav-hamburger.open span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  .nav-hamburger.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
   @media (max-width: 600px) {
     nav { padding: 0.75rem 1rem; }
-    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 0;
+      background: rgba(10, 14, 23, 0.98);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 0;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links li { width: 100%; }
+    .nav-links a {
+      display: block;
+      padding: 0.85rem 1.5rem;
+      font-size: 0.9rem;
+    }
+    .nav-links a::after { display: none; }
     section { padding: 4rem 1.25rem; }
     .hero { padding: 6rem 1.25rem 3rem; }
     .hero-cta { flex-direction: column; }
@@ -957,13 +1028,18 @@
 <!-- Navigation -->
 <nav>
   <div class="nav-logo">luka<span>.dev</span></div>
-  <ul class="nav-links">
+  <ul class="nav-links" id="navLinks">
     <li><a href="#about">About</a></li>
     <li><a href="#startup">Startup</a></li>
     <li><a href="#education">Education</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
 
 <!-- Hero -->
@@ -1257,6 +1333,22 @@
       nav.style.background = 'rgba(10, 14, 23, 0.8)';
       nav.style.boxShadow = 'none';
     }
+  });
+
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen);
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
   });
 </script>
 </body>
