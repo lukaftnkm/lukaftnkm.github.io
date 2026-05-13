@@ -521,6 +521,62 @@
       line-height: 1.5;
     }
 
+    /* ───── projects grid ───── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .projects-grid { grid-template-columns: 1fr; } }
+    .project-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transition: border-color .2s;
+    }
+    .project-card:hover { border-color: var(--border-strong); }
+    .project-card-head { text-align: center; }
+    .project-name {
+      font-size: clamp(28px, 3.5vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin: 6px 0 0;
+      color: var(--text);
+    }
+    .project-art {
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    /* TripVice art */
+    .tripvice-art {
+      width: 160px; height: 160px;
+      background: radial-gradient(circle at 60% 40%, color-mix(in oklab, var(--accent) 20%, transparent), transparent 70%);
+      border: 1px solid var(--border-strong);
+      flex-direction: column;
+      gap: 6px;
+    }
+    .tripvice-logo {
+      font-size: 48px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .tripvice-tagline {
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
     /* ───── timeline ───── */
     .timeline { position: relative; padding-left: 32px; }
     .timeline::before {

@@ -4,7 +4,7 @@
 function Nav() {
   const links = [
     { id: 'about', n: '01', label: 'about' },
-    { id: 'startup', n: '02', label: 'sokolus' },
+    { id: 'projects', n: '02', label: 'projects' },
     { id: 'education', n: '03', label: 'education' },
     { id: 'awards', n: '04', label: 'awards' },
     { id: 'contact', n: '05', label: 'contact' },
@@ -66,10 +66,11 @@ function Hero() {
           <div className="hero-chips reveal in">
             <span className="chip">InnovNation '25 Winner</span>
             <span className="chip">Web Summit Qatar '26</span>
+            <span className="chip">TripVice · BLDxp</span>
             <span className="chip">MSc ECE — In Progress</span>
           </div>
           <div className="hero-cta reveal in">
-            <a className="btn btn-primary" href="#startup">
+            <a className="btn btn-primary" href="#projects">
               <span>./explore_work</span>
               <span className="arrow">→</span>
             </a>

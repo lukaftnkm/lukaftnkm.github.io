@@ -7,7 +7,7 @@ Single-page personal portfolio for **Luka Đelošević** hosted on GitHub Pages 
 ## Owner
 
 - **Name:** Luka Đelošević
-- **Role:** MSc ECE student + co-founder of Sokolus
+- **Role:** MSc ECE student + co-founder of Sokolus & TripVice
 - **Email:** djelosevicluka002@gmail.com
 - **GitHub:** lukaftnkm
 - **LinkedIn:** luka-djelosevic
@@ -16,7 +16,8 @@ Single-page personal portfolio for **Luka Đelošević** hosted on GitHub Pages 
 
 - University: Faculty of Technical Sciences, University of Pristina (FTN Pristina)
 - Erasmus exchange: Universidad de Vigo, Spain (2025)
-- Startup: **Sokolus** — co-founded with ikuDev team of 3; live at sokolus.rs
+- Startup 1: **Sokolus** — co-founded with ikuDev team of 3; live at sokolus.rs
+- Startup 2: **TripVice** — smart trip finder for budget travelers (flights + hotels + activities + eSIMs); built by **BLDxp** (Bogdan, Luka, Djordje); live at tripvice.net and bldxp.pages.dev
 - Award: **1st place, InnovNation Serbia 2025** (Student Teams category)
 - Event: **Web Summit Qatar 2026** speaker/pitcher
 - Degree progress: BSc completed 2021–2025, MSc in progress 2025–present
@@ -46,7 +47,8 @@ Single-page personal portfolio for **Luka Đelošević** hosted on GitHub Pages 
 
 - Keep everything in `index.html` unless a new page is explicitly requested
 - Maintain the dark-theme aesthetic and cyan accent color
-- Section order: Hero → About → Startup → Education → Skills → Recognition → Contact
+- Section order: Hero → About → Projects → Education → Awards → Contact
+- Projects section (02) shows both Sokolus and TripVice as side-by-side cards
 - Section labels follow the pattern `01 — Name` through `06 — Name`
 - Scroll reveal uses the `.reveal` / `.visible` class pattern via IntersectionObserver
 - Mobile breakpoints: 900px (hide terminal, stack grids) and 600px (hamburger nav)

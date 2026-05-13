@@ -81,34 +81,36 @@ function About() {
   );
 }
 
-// ── Sokolus ───────────────────────────────────────────────────────────────────
+// ── Projects ──────────────────────────────────────────────────────────────────
 function Sokolus() {
   return (
-    <section className="section" id="startup" data-screen-label="sokolus">
+    <section className="section" id="projects" data-screen-label="projects">
       <div className="container">
-        <SectionHead num="02" label="// Startup" />
+        <SectionHead num="02" label="// Projects" />
         <Reveal as="h2" className="section-title" delay={1}>
-          Building something <span className="accent">real</span>.
+          Building things that <span className="accent">matter</span>.
         </Reveal>
-        <div className="sokolus">
-          <Reveal className="sokolus-art" delay={2}>
-            <div className="sokolus-orbit" />
-            <div className="sokolus-logo">
-              S<small>by ikuDev</small>
+        <div className="projects-grid">
+
+          {/* ── Sokolus ── */}
+          <Reveal className="project-card" delay={2}>
+            <div className="project-card-head">
+              <div className="sokolus-art project-art" style={{ maxWidth: 160, width: 160, height: 160, margin: '0 auto 24px' }}>
+                <div className="sokolus-orbit" />
+                <div className="sokolus-logo" style={{ fontSize: 'clamp(36px,6vw,64px)' }}>
+                  S<small>by ikuDev</small>
+                </div>
+              </div>
+              <div className="sokolus-meta">
+                <span className="sokolus-status">Building v1</span>
+                <span>· Team of 3 · ikuDev</span>
+              </div>
+              <h3 className="project-name">Sokolus.</h3>
             </div>
-          </Reveal>
-          <Reveal delay={3}>
-            <div className="sokolus-meta">
-              <span className="sokolus-status">Building v1</span>
-              <span>· Team of 3 · ikuDev</span>
-            </div>
-            <h3>Sokolus.</h3>
             <p className="sokolus-desc">
-              The award-winning digital solution born from <strong>ikuDev</strong> — a team
-              of three engineers and innovators. After taking <strong>1st place at
-              InnovNation Serbia 2025</strong>, we built our first working prototype and
-              showcased it to investors and tech leaders at <strong>Web Summit Qatar
-              2026</strong>.
+              Award-winning digital solution from <strong>ikuDev</strong>. Took <strong>1st place at
+              InnovNation Serbia 2025</strong>, shipped a working prototype, and pitched to global
+              investors at <strong>Web Summit Qatar 2026</strong>.
             </p>
             <div className="sokolus-pillars">
               <div className="pillar">
@@ -138,6 +140,60 @@ function Sokolus() {
               <span className="arrow">→</span>
             </a>
           </Reveal>
+
+          {/* ── TripVice ── */}
+          <Reveal className="project-card" delay={3}>
+            <div className="project-card-head">
+              <div className="tripvice-art project-art" style={{ margin: '0 auto 24px' }}>
+                <div className="tripvice-logo">TV</div>
+                <div className="tripvice-tagline">smart trip finder</div>
+              </div>
+              <div className="sokolus-meta">
+                <span className="sokolus-status">Live</span>
+                <span>· BLDxp — Bogdan, Luka, Djordje</span>
+              </div>
+              <h3 className="project-name">TripVice.</h3>
+            </div>
+            <p className="sokolus-desc">
+              Smart trip finder for <strong>budget travelers</strong> — finds the cheapest flight
+              + hotel combos, activities, eSIMs and more in one place. Built by <strong>BLDxp</strong>
+              to radically speed up the process of planning any trip.
+            </p>
+            <div className="sokolus-pillars">
+              <div className="pillar">
+                <span className="pillar-icon">01</span>
+                <div>
+                  <h4>All-in-One Search</h4>
+                  <p>Flights, hotels, activities, eSIMs — one flow.</p>
+                </div>
+              </div>
+              <div className="pillar">
+                <span className="pillar-icon">02</span>
+                <div>
+                  <h4>Budget-First</h4>
+                  <p>Optimized for travelers who want the best price.</p>
+                </div>
+              </div>
+              <div className="pillar">
+                <span className="pillar-icon">03</span>
+                <div>
+                  <h4>Live Product</h4>
+                  <p>tripvice.net — deployed and running.</p>
+                </div>
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+              <a className="btn btn-ghost" href="https://www.tripvice.net/" target="_blank" rel="noopener">
+                <span>tripvice.net</span>
+                <span className="arrow">→</span>
+              </a>
+              <a className="btn btn-ghost" href="https://bldxp.pages.dev/" target="_blank" rel="noopener">
+                <span>bldxp.pages.dev</span>
+                <span className="arrow">→</span>
+              </a>
+            </div>
+          </Reveal>
+
         </div>
       </div>
     </section>
