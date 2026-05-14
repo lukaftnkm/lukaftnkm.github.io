@@ -10,6 +10,169 @@ function SectionHead({ num, label }) {
   );
 }
 
+// ── Mini shell ────────────────────────────────────────────────────────────────
+const SHELL_COMMANDS = {
+  help: () => [
+    '  whoami          who is Luka',
+    '  about           background & mission',
+    '  projects        Sokolus + TripVice',
+    '  contact         get in touch',
+    '  skills          tech stack',
+    '  sudo hire-luka  (self-explanatory)',
+    '  clear           reset terminal',
+  ],
+  whoami: () => ['Luka Đelošević — MSc ECE, co-founder, innovator.'],
+  about: () => [
+    "Master's student @ FTN Pristina, Serbia.",
+    'Erasmus exchange @ Universidad de Vigo, Spain.',
+    '1st place — InnovNation Serbia 2025.',
+    'Speaker @ Web Summit Qatar 2026.',
+    'Co-founder of Sokolus & BLDxp.',
+  ],
+  projects: () => [
+    '→ Sokolus    sokolus.rs',
+    '  Award-winning platform (ikuDev, team of 3).',
+    '→ TripVice   tripvice.net',
+    '  Smart trip finder (BLDxp: Bogdan, Luka, Djordje).',
+  ],
+  contact: () => [
+    'email      djelosevicluka002@gmail.com',
+    'linkedin   luka-djelosevic',
+    'github     lukaftnkm',
+  ],
+  skills: () => [
+    'languages   Python · JavaScript · C · Java',
+    'web         React · HTML · CSS · Node.js',
+    'tools       Git · Linux · Figma',
+  ],
+  'sudo hire-luka': () => ({ slow: true, lines: [
+    '[sudo] password for recruiter: ****',
+    'Verifying credentials ...',
+    '✓ Authorization granted.',
+    '✓ Luka added to your team.',
+    '→  djelosevicluka002@gmail.com',
+  ]}),
+};
+
+function MiniShell() {
+  const INIT = [
+    { id: 0, type: 'cmd',  text: 'whoami' },
+    { id: 1, type: 'out',  text: 'Luka Đelošević' },
+    { id: 2, type: 'blank' },
+    { id: 3, type: 'cmd',  text: 'ls projects/' },
+    { id: 4, type: 'out',  text: 'sokolus/    tripvice/' },
+    { id: 5, type: 'blank' },
+    { id: 6, type: 'hint', text: '# try: help | projects | sudo hire-luka' },
+  ];
+
+  const [lines,   setLines]   = React.useState(INIT);
+  const [input,   setInput]   = React.useState('');
+  const [history, setHistory] = React.useState([]);
+  const [histIdx, setHistIdx] = React.useState(-1);
+  const [focused, setFocused] = React.useState(false);
+  const inputRef  = React.useRef(null);
+  const bottomRef = React.useRef(null);
+  const uid       = React.useRef(INIT.length);
+  const alive     = React.useRef(true);
+
+  React.useEffect(() => () => { alive.current = false; }, []);
+  React.useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [lines.length]);
+
+  function nextId() { return uid.current++; }
+
+  function run(raw) {
+    const trimmed = raw.trim();
+    const cmd = trimmed.toLowerCase();
+    if (!trimmed) return;
+
+    setInput('');
+    setHistIdx(-1);
+    setHistory(h => [trimmed, ...h].slice(0, 50));
+
+    if (cmd === 'clear') { setLines([]); return; }
+
+    const entry = [{ id: nextId(), type: 'cmd', text: trimmed }];
+    const handler = SHELL_COMMANDS[cmd];
+
+    if (handler) {
+      const result = handler();
+      if (Array.isArray(result)) {
+        result.forEach(t => entry.push({ id: nextId(), type: 'out', text: t }));
+        entry.push({ id: nextId(), type: 'blank' });
+        setLines(l => [...l, ...entry]);
+      } else {
+        setLines(l => [...l, ...entry]);
+        result.lines.forEach((t, i) => {
+          setTimeout(() => {
+            if (!alive.current) return;
+            const isLast = i === result.lines.length - 1;
+            const type = t.startsWith('✓') ? 'ok' : 'out';
+            setLines(l => [
+              ...l,
+              { id: uid.current++, type, text: t },
+              ...(isLast ? [{ id: uid.current++, type: 'blank' }] : []),
+            ]);
+          }, 110 * (i + 1));
+        });
+      }
+    } else {
+      entry.push({ id: nextId(), type: 'err', text: `bash: ${cmd}: command not found — try 'help'` });
+      entry.push({ id: nextId(), type: 'blank' });
+      setLines(l => [...l, ...entry]);
+    }
+  }
+
+  function onKeyDown(e) {
+    if (e.key === 'Enter') {
+      run(input);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const next = Math.min(histIdx + 1, history.length - 1);
+      setHistIdx(next);
+      if (history[next] !== undefined) setInput(history[next]);
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const next = Math.max(histIdx - 1, -1);
+      setHistIdx(next);
+      setInput(next === -1 ? '' : (history[next] || ''));
+    }
+  }
+
+  return (
+    <div onClick={() => inputRef.current?.focus()} style={{ cursor: 'text' }}>
+      <div style={{ maxHeight: 220, overflowY: 'auto', scrollbarWidth: 'none' }}>
+        {lines.map(l => (
+          <span key={l.id} className="term-line">
+            {l.type === 'cmd'   && <><span className="prompt">$</span>{' '}<span className="arg">{l.text}</span></>}
+            {l.type === 'out'   && <span className="out">{l.text}</span>}
+            {l.type === 'ok'    && <span className="ok">{l.text}</span>}
+            {l.type === 'err'   && <span style={{ color: 'var(--danger)' }}>{l.text}</span>}
+            {l.type === 'hint'  && <span className="comment">{l.text}</span>}
+            {l.type === 'blank' && ' '}
+          </span>
+        ))}
+        <div ref={bottomRef} />
+      </div>
+      <span className="term-line" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+        <span className="prompt">$</span>{' '}
+        <span className="arg">{input}</span>
+        <span className="term-cursor" style={{ opacity: focused ? undefined : 0.4 }} />
+        <input
+          ref={inputRef}
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={onKeyDown}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          style={{ position: 'absolute', opacity: 0, inset: 0, cursor: 'text' }}
+          autoComplete="off" autoCorrect="off" spellCheck={false}
+          aria-label="terminal input"
+        />
+      </span>
+    </div>
+  );
+}
+
 // ── About ─────────────────────────────────────────────────────────────────────
 function About() {
   return (
@@ -41,25 +204,10 @@ function About() {
           <Reveal className="term" delay={3}>
             <div className="term-head">
               <span className="term-dot r" /><span className="term-dot y" /><span className="term-dot g" />
-              <span className="term-title">luka@portfolio:~</span>
+              <span className="term-title">luka@portfolio:~ — interactive</span>
             </div>
             <div className="term-body">
-              <span className="term-line"><span className="prompt">$</span> whoami</span>
-              <span className="term-line"><span className="out">Luka Đelošević</span></span>
-              <span className="term-line"><span className="comment">&nbsp;</span></span>
-              <span className="term-line"><span className="prompt">$</span> cat status.json</span>
-              <span className="term-line"><span className="out">{'{'}</span></span>
-              <span className="term-line">&nbsp;&nbsp;<span className="key">"role"</span>: <span className="ok">"MSc ECE @ FTN Pristina"</span>,</span>
-              <span className="term-line">&nbsp;&nbsp;<span className="key">"working_on"</span>: <span className="ok">"Sokolus v1"</span>,</span>
-              <span className="term-line">&nbsp;&nbsp;<span className="key">"based_in"</span>: <span className="ok">"Serbia 🇷🇸"</span>,</span>
-              <span className="term-line">&nbsp;&nbsp;<span className="key">"open_to"</span>: <span className="ok">["full-time","collabs"]</span></span>
-              <span className="term-line"><span className="out">{'}'}</span></span>
-              <span className="term-line"><span className="comment">&nbsp;</span></span>
-              <span className="term-line"><span className="prompt">$</span> tail -n 3 wins.log</span>
-              <span className="term-line"><span className="ok">✓</span> <span className="out">InnovNation 2025 — 1st place</span></span>
-              <span className="term-line"><span className="ok">✓</span> <span className="out">Web Summit Qatar 2026 — speaker</span></span>
-              <span className="term-line"><span className="ok">✓</span> <span className="out">Sokolus v1 prototype shipped</span></span>
-              <span className="term-line"><span className="prompt">$</span><span className="term-cursor" /></span>
+              <MiniShell />
             </div>
           </Reveal>
         </div>
