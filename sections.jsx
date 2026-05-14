@@ -354,6 +354,16 @@ function Sokolus() {
 
 // ── Education ─────────────────────────────────────────────────────────────────
 function Education() {
+  const tlRef = React.useRef(null);
+  React.useEffect(() => {
+    const el = tlRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { el.classList.add('drawn'); io.disconnect(); }
+    }, { threshold: 0.1 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   const items = [
     {
       year: '2025 — PRESENT',
@@ -382,7 +392,7 @@ function Education() {
         <Reveal as="h2" className="section-title" delay={1}>
           Academic <span className="accent">journey</span>.
         </Reveal>
-        <div className="timeline">
+        <div className="timeline" ref={tlRef}>
           {items.map((it, i) => (
             <Reveal className="tl-item" key={i} delay={Math.min(i + 1, 4)} data-current={it.current || undefined}>
               <div className="tl-year">{it.year}</div>
@@ -435,7 +445,7 @@ function Awards() {
           ].map((l, i) => (
             <Reveal className="lang" key={l.name} delay={Math.min(i + 1, 4)}>
               <div className="lang-name">{l.name}</div>
-              <div className="lang-bar"><i style={{ width: `${l.pct}%` }} /></div>
+              <AnimatedBar pct={l.pct} />
               <div className="lang-level">{l.level}</div>
             </Reveal>
           ))}

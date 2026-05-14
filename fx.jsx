@@ -239,6 +239,43 @@ function useActiveSection(ids) {
   return active;
 }
 
+// Scroll progress — 0 to 1 over the full page height.
+function useScrollProgress() {
+  const [pct, setPct] = React.useState(0);
+  React.useEffect(() => {
+    const onScroll = () => {
+      const el = document.documentElement;
+      const scrolled = el.scrollTop || document.body.scrollTop;
+      const total = el.scrollHeight - el.clientHeight;
+      setPct(total > 0 ? scrolled / total : 0);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return pct;
+}
+
+// Animated bar — fills from 0 to pct% when scrolled into view.
+function AnimatedBar({ pct }) {
+  const ref = React.useRef(null);
+  const [width, setWidth] = React.useState(0);
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setWidth(pct); io.disconnect(); }
+    }, { threshold: 0.5 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [pct]);
+  return (
+    <div ref={ref} className="lang-bar">
+      <i style={{ width: `${width}%`, transition: 'width 1s cubic-bezier(.2,.7,.3,1)' }} />
+    </div>
+  );
+}
+
 // ── Pointer FX ────────────────────────────────────────────────────────────────
 // Honors the Tweaks "Calm" motion level and OS reduced-motion preference.
 function motionAllowed() {
@@ -315,4 +352,4 @@ function Magnetic({ as = 'a', strength = 0.28, children, ...rest }) {
   return <Tag ref={ref} {...rest}>{children}</Tag>;
 }
 
-Object.assign(window, { useScramble, Scramble, Typewriter, Reveal, Counter, BootSequence, LiveClock, useActiveSection, useMagnetic, useCardFx, Magnetic });
+Object.assign(window, { useScramble, Scramble, Typewriter, Reveal, Counter, BootSequence, LiveClock, useActiveSection, useMagnetic, useCardFx, Magnetic, useScrollProgress, AnimatedBar });

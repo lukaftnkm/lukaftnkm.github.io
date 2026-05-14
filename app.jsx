@@ -2,6 +2,7 @@
 
 // ── Nav ───────────────────────────────────────────────────────────────────────
 function Nav() {
+  const progress = useScrollProgress();
   const links = [
     { id: 'about', n: '01', label: 'about' },
     { id: 'projects', n: '02', label: 'projects' },
@@ -30,6 +31,7 @@ function Nav() {
           <LiveClock />
         </div>
       </div>
+      <div className="nav-progress" style={{ width: `${progress * 100}%` }} />
     </nav>
   );
 }
