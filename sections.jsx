@@ -71,12 +71,14 @@ function MiniShell() {
   const [histIdx, setHistIdx] = React.useState(-1);
   const [focused, setFocused] = React.useState(false);
   const inputRef  = React.useRef(null);
-  const bottomRef = React.useRef(null);
+  const scrollRef = React.useRef(null);
   const uid       = React.useRef(INIT.length);
   const alive     = React.useRef(true);
 
   React.useEffect(() => () => { alive.current = false; }, []);
-  React.useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [lines.length]);
+  React.useEffect(() => {
+    if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  }, [lines.length]);
 
   function nextId() { return uid.current++; }
 
@@ -140,7 +142,7 @@ function MiniShell() {
 
   return (
     <div onClick={() => inputRef.current?.focus()} style={{ cursor: 'text' }}>
-      <div style={{ maxHeight: 220, overflowY: 'auto', scrollbarWidth: 'none' }}>
+      <div ref={scrollRef} style={{ maxHeight: 220, overflowY: 'auto', scrollbarWidth: 'none' }}>
         {lines.map(l => (
           <span key={l.id} className="term-line">
             {l.type === 'cmd'   && <><span className="prompt">$</span>{' '}<span className="arg">{l.text}</span></>}
@@ -151,7 +153,6 @@ function MiniShell() {
             {l.type === 'blank' && ' '}
           </span>
         ))}
-        <div ref={bottomRef} />
       </div>
       <span className="term-line" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
         <span className="prompt">$</span>{' '}
