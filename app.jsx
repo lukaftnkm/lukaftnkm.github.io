@@ -161,6 +161,19 @@ function App() {
     try { return !TWEAK_DEFAULTS.boot || sessionStorage.getItem('luka-booted') === '1'; }
     catch { return false; }
   });
+  const [konamiActive, setKonamiActive] = React.useState(false);
+
+  // Tab title trick
+  React.useEffect(() => {
+    const original = document.title;
+    const onVisibility = () => { document.title = document.hidden ? 'come back... :(' : original; };
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => { document.removeEventListener('visibilitychange', onVisibility); document.title = original; };
+  }, []);
+
+  // Konami code
+  const triggerKonami = React.useCallback(() => setKonamiActive(true), []);
+  useKonami(triggerKonami);
 
   React.useEffect(() => {
     const r = document.documentElement;
@@ -182,6 +195,8 @@ function App() {
   return (
     <>
       {!bootDone && <BootSequence onDone={onBootDone} />}
+      {konamiActive && <KonamiEgg onDone={() => setKonamiActive(false)} />}
+      <ConfettiCanvas />
       <div className="shell">
         <Nav />
         <Hero />

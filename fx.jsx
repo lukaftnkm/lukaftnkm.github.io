@@ -352,4 +352,140 @@ function Magnetic({ as = 'a', strength = 0.28, children, ...rest }) {
   return <Tag ref={ref} {...rest}>{children}</Tag>;
 }
 
-Object.assign(window, { useScramble, Scramble, Typewriter, Reveal, Counter, BootSequence, LiveClock, useActiveSection, useMagnetic, useCardFx, Magnetic, useScrollProgress, AnimatedBar });
+// ── Konami code listener ──────────────────────────────────────────────────────
+function useKonami(onTrigger) {
+  React.useEffect(() => {
+    const SEQ = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+    let idx = 0;
+    const onKey = (e) => {
+      if (e.key === SEQ[idx]) {
+        idx++;
+        if (idx === SEQ.length) { idx = 0; onTrigger(); }
+      } else {
+        idx = e.key === SEQ[0] ? 1 : 0;
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onTrigger]);
+}
+
+// ── Konami easter egg overlay ─────────────────────────────────────────────────
+function KonamiEgg({ onDone }) {
+  const LINES = [
+    { text: '> KONAMI CODE ACCEPTED',       accent: false },
+    { text: '> UNLOCKING: hire-luka.exe',   accent: false },
+    { text: '> [████████████████] 100%',    accent: false },
+    { text: '> STATUS: AVAILABLE FOR HIRE', accent: true  },
+    { text: '> djelosevicluka002@gmail.com', accent: true },
+  ];
+  const [shown, setShown] = React.useState(0);
+  const [exiting, setExiting] = React.useState(false);
+
+  React.useEffect(() => {
+    LINES.forEach((_, i) => setTimeout(() => setShown(i + 1), i * 240));
+    const exitAt = LINES.length * 240 + 1600;
+    setTimeout(() => setExiting(true), exitAt);
+    setTimeout(onDone, exitAt + 420);
+    // eslint-disable-next-line
+  }, []);
+
+  return (
+    <div style={{
+      position: 'fixed', inset: 0, zIndex: 9500,
+      background: 'rgba(8,9,11,0.93)',
+      backdropFilter: 'blur(6px)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      opacity: exiting ? 0 : 1,
+      transition: 'opacity .42s ease',
+    }}>
+      <div style={{
+        border: '1px solid var(--accent)',
+        borderRadius: 12,
+        padding: '40px 52px',
+        boxShadow: '0 0 48px var(--accent-soft), inset 0 0 0 1px var(--accent-soft)',
+        fontFamily: 'var(--mono)',
+        fontSize: 15,
+        lineHeight: 2.2,
+        minWidth: 360,
+      }}>
+        {LINES.slice(0, shown).map((l, i) => (
+          <div key={i} style={{ color: l.accent ? 'var(--accent)' : 'var(--text)' }}>{l.text}</div>
+        ))}
+        {shown < LINES.length && <span className="term-cursor" />}
+      </div>
+    </div>
+  );
+}
+
+// ── Confetti canvas ───────────────────────────────────────────────────────────
+function ConfettiCanvas() {
+  const canvasRef = React.useRef(null);
+  const particles  = React.useRef([]);
+  const raf        = React.useRef(0);
+
+  function loop() {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const alive = [];
+    for (const p of particles.current) {
+      p.x += p.vx; p.y += p.vy;
+      p.vy += 0.28; p.vx *= 0.99;
+      p.rot += p.rotV;
+      p.life -= p.decay;
+      if (p.life <= 0) continue;
+      alive.push(p);
+      ctx.save();
+      ctx.globalAlpha = Math.min(1, p.life * 2);
+      ctx.fillStyle = p.color;
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    }
+    particles.current = alive;
+    if (alive.length) raf.current = requestAnimationFrame(loop);
+  }
+
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    window.fireConfetti = (x, y) => {
+      const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#c5ff36';
+      const palette = [accent, '#ffffff', accent + 'bb', 'rgba(255,255,255,0.7)'];
+      for (let i = 0; i < 52; i++) {
+        const angle = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.4;
+        const speed = 4 + Math.random() * 9;
+        particles.current.push({
+          x, y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          rot: Math.random() * Math.PI * 2,
+          rotV: (Math.random() - 0.5) * 0.3,
+          w: 6 + Math.random() * 7,
+          h: 3 + Math.random() * 4,
+          life: 1,
+          decay: 0.011 + Math.random() * 0.015,
+          color: palette[Math.floor(Math.random() * palette.length)],
+        });
+      }
+      cancelAnimationFrame(raf.current);
+      raf.current = requestAnimationFrame(loop);
+    };
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      delete window.fireConfetti;
+      cancelAnimationFrame(raf.current);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 9490 }} />;
+}
+
+Object.assign(window, { useScramble, Scramble, Typewriter, Reveal, Counter, BootSequence, LiveClock, useActiveSection, useMagnetic, useCardFx, Magnetic, useScrollProgress, AnimatedBar, useKonami, KonamiEgg, ConfettiCanvas });

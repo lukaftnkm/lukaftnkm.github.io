@@ -486,7 +486,9 @@ function Contact() {
           <Reveal delay={3}>
             <div className="channels">
               {channels.map((c) => (
-                <a key={c.href} className="channel" href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel="noopener">
+                <a key={c.href} className="channel" href={c.href}
+                   target={c.href.startsWith('http') ? '_blank' : undefined} rel="noopener"
+                   onClick={e => window.fireConfetti && window.fireConfetti(e.clientX, e.clientY)}>
                   <span className="channel-key">{c.key}</span>
                   <span className="channel-val">{c.val}</span>
                   <span className="channel-arrow">→</span>
