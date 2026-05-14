@@ -202,16 +202,23 @@ function BootSequence({ onDone }) {
   );
 }
 
-// Live clock — UTC HH:MM:SS.
+// Live clock — Belgrade time, auto-switches CET↔CEST.
 function LiveClock() {
   const [t, setT] = React.useState(new Date());
   React.useEffect(() => {
     const id = setInterval(() => setT(new Date()), 1000);
     return () => clearInterval(id);
   }, []);
-  const pad = (n) => String(n).padStart(2, '0');
-  const utc = `${pad(t.getUTCHours())}:${pad(t.getUTCMinutes())}:${pad(t.getUTCSeconds())} UTC`;
-  return <span style={{ fontVariantNumeric: 'tabular-nums' }}>{utc}</span>;
+  const time = t.toLocaleTimeString('en-GB', {
+    timeZone: 'Europe/Belgrade',
+    hour: '2-digit', minute: '2-digit', second: '2-digit',
+    hour12: false,
+  });
+  const offsetStr = new Intl.DateTimeFormat('en', {
+    timeZone: 'Europe/Belgrade', timeZoneName: 'longOffset',
+  }).formatToParts(t).find(p => p.type === 'timeZoneName')?.value ?? '';
+  const label = offsetStr.includes('+02') ? 'CEST' : 'CET';
+  return <span style={{ fontVariantNumeric: 'tabular-nums' }}>{time} {label}</span>;
 }
 
 // Active-section spy. Returns id of section currently in view.
