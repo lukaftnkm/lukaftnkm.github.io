@@ -33,7 +33,8 @@ function About() {
             </p>
             <p>
               Today I'm a <strong>co-founder &amp; CPO at Sokolus</strong>, turning our
-              award-winning idea into a real product alongside two engineers. I believe
+              award-winning idea into a real product alongside two engineers, and a
+              <strong> co-founder of BLDxp</strong>, the team behind TripVice. I believe
               engineering talent plus entrepreneurial thinking builds things that matter.
             </p>
           </Reveal>
@@ -156,8 +157,8 @@ function Sokolus() {
             </div>
             <p className="sokolus-desc">
               Smart trip finder for <strong>budget travelers</strong> — finds the cheapest flight
-              + hotel combos, activities, eSIMs and more in one place. Built by <strong>BLDxp</strong>
-              to radically speed up the process of planning any trip.
+              + hotel combos, activities, eSIMs and more in one place. Built by{' '}
+              <strong>BLDxp</strong> to radically speed up the process of planning any trip.
             </p>
             <div className="sokolus-pillars">
               <div className="pillar">
@@ -300,6 +301,7 @@ function Contact() {
     { key: 'linkedin', val: 'luka-djelosevic', href: 'https://linkedin.com/in/luka-djelosevic' },
     { key: 'github', val: 'lukaftnkm', href: 'https://github.com/lukaftnkm' },
     { key: 'startup', val: 'sokolus.rs', href: 'https://sokolus.rs' },
+    { key: 'startup', val: 'bldxp.pages.dev', href: 'https://bldxp.pages.dev/' },
   ];
   return (
     <section className="section" id="contact" data-screen-label="contact">
@@ -322,7 +324,7 @@ function Contact() {
           <Reveal delay={3}>
             <div className="channels">
               {channels.map((c) => (
-                <a key={c.key} className="channel" href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel="noopener">
+                <a key={c.href} className="channel" href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel="noopener">
                   <span className="channel-key">{c.key}</span>
                   <span className="channel-val">{c.val}</span>
                   <span className="channel-arrow">→</span>
