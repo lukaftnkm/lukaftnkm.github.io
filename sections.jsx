@@ -84,6 +84,8 @@ function About() {
 
 // ── Projects ──────────────────────────────────────────────────────────────────
 function Sokolus() {
+  const sokolusCard = useCardFx();
+  const tripviceCard = useCardFx();
   return (
     <section className="section" id="projects" data-screen-label="projects">
       <div className="container">
@@ -94,7 +96,7 @@ function Sokolus() {
         <div className="projects-grid">
 
           {/* ── Sokolus ── */}
-          <Reveal className="project-card" delay={2}>
+          <Reveal className="project-card" delay={2} innerRef={sokolusCard}>
             <div className="project-card-head">
               <div className="sokolus-art project-art" style={{ maxWidth: 160, width: 160, height: 160, margin: '0 auto 24px' }}>
                 <div className="sokolus-orbit" />
@@ -136,14 +138,14 @@ function Sokolus() {
                 </div>
               </div>
             </div>
-            <a className="btn btn-ghost" href="https://sokolus.rs" target="_blank" rel="noopener">
+            <Magnetic as="a" className="btn btn-ghost" href="https://sokolus.rs" target="_blank" rel="noopener">
               <span>sokolus.rs</span>
               <span className="arrow">→</span>
-            </a>
+            </Magnetic>
           </Reveal>
 
           {/* ── TripVice ── */}
-          <Reveal className="project-card" delay={3}>
+          <Reveal className="project-card" delay={3} innerRef={tripviceCard}>
             <div className="project-card-head">
               <div className="tripvice-art project-art" style={{ margin: '0 auto 24px' }}>
                 <div className="tripvice-logo">TV</div>
@@ -184,14 +186,14 @@ function Sokolus() {
               </div>
             </div>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-              <a className="btn btn-ghost" href="https://www.tripvice.net/" target="_blank" rel="noopener">
+              <Magnetic as="a" className="btn btn-ghost" href="https://www.tripvice.net/" target="_blank" rel="noopener">
                 <span>tripvice.net</span>
                 <span className="arrow">→</span>
-              </a>
-              <a className="btn btn-ghost" href="https://bldxp.pages.dev/" target="_blank" rel="noopener">
+              </Magnetic>
+              <Magnetic as="a" className="btn btn-ghost" href="https://bldxp.pages.dev/" target="_blank" rel="noopener">
                 <span>bldxp.pages.dev</span>
                 <span className="arrow">→</span>
-              </a>
+              </Magnetic>
             </div>
           </Reveal>
 
@@ -248,6 +250,7 @@ function Education() {
 
 // ── Awards ────────────────────────────────────────────────────────────────────
 function Awards() {
+  const awardCard = useCardFx(5);
   return (
     <section className="section" id="awards" data-screen-label="awards">
       <div className="container">
@@ -256,7 +259,7 @@ function Awards() {
           Awards &amp; <span className="accent">languages</span>.
         </Reveal>
 
-        <Reveal className="award-card" delay={2}>
+        <Reveal className="award-card" delay={2} innerRef={awardCard}>
           <div className="award-grid">
             <div className="award-rank">1<sup>st</sup></div>
             <div className="award-body">

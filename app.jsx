@@ -70,14 +70,14 @@ function Hero() {
             <span className="chip">MSc ECE — In Progress</span>
           </div>
           <div className="hero-cta reveal in">
-            <a className="btn btn-primary" href="#projects">
+            <Magnetic as="a" className="btn btn-primary" href="#projects">
               <span>./explore_work</span>
               <span className="arrow">→</span>
-            </a>
-            <a className="btn btn-ghost" href="#contact">
+            </Magnetic>
+            <Magnetic as="a" className="btn btn-ghost" href="#contact">
               <span>contact()</span>
               <span className="arrow">→</span>
-            </a>
+            </Magnetic>
           </div>
         </div>
 

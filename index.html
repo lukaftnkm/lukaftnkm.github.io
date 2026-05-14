@@ -782,6 +782,34 @@
       box-shadow: 0 0 8px var(--accent);
     }
 
+    /* ───── pointer fx ───── */
+    .project-card, .award-card {
+      --mx: 50%; --my: 50%;
+      position: relative;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+    /* beat .reveal's .8s transform transition so tilt feels responsive */
+    .reveal.project-card, .reveal.award-card {
+      transition:
+        opacity .8s cubic-bezier(.2,.7,.3,1),
+        transform .25s cubic-bezier(.2,.7,.3,1),
+        border-color .2s ease;
+    }
+    .project-card::after, .award-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      background: radial-gradient(420px circle at var(--mx) var(--my),
+        color-mix(in oklab, var(--accent) 12%, transparent), transparent 60%);
+      opacity: 0;
+      transition: opacity .3s ease;
+    }
+    .project-card:hover::after, .award-card:hover::after { opacity: 1; }
+    body[data-motion="calm"] .project-card,
+    body[data-motion="calm"] .award-card { transform: none !important; }
+
     /* ───── reveal helper ───── */
     .reveal {
       opacity: 0;

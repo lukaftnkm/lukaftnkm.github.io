@@ -101,8 +101,13 @@ function Typewriter({ text, speed = 28, startDelay = 0, cursor = false, onDone }
 }
 
 // Reveal-on-scroll. Wraps children, applies .in class when intersecting.
-function Reveal({ children, delay = 0, as = 'div', className = '', ...rest }) {
+function Reveal({ children, delay = 0, as = 'div', className = '', innerRef, ...rest }) {
   const ref = React.useRef(null);
+  const setRef = React.useCallback((node) => {
+    ref.current = node;
+    if (typeof innerRef === 'function') innerRef(node);
+    else if (innerRef) innerRef.current = node;
+  }, [innerRef]);
   React.useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -119,7 +124,7 @@ function Reveal({ children, delay = 0, as = 'div', className = '', ...rest }) {
   }, []);
   const Tag = as;
   return (
-    <Tag ref={ref}
+    <Tag ref={setRef}
          data-delay={delay || undefined}
          className={`reveal ${className}`.trim()}
          {...rest}>
@@ -234,4 +239,80 @@ function useActiveSection(ids) {
   return active;
 }
 
-Object.assign(window, { useScramble, Scramble, Typewriter, Reveal, Counter, BootSequence, LiveClock, useActiveSection });
+// ── Pointer FX ────────────────────────────────────────────────────────────────
+// Honors the Tweaks "Calm" motion level and OS reduced-motion preference.
+function motionAllowed() {
+  if (document.body.getAttribute('data-motion') === 'calm') return false;
+  return !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+}
+
+// Magnetic — element drifts toward the pointer, springs back on leave.
+function useMagnetic(strength = 0.28) {
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let raf = 0;
+    const onMove = (e) => {
+      if (!motionAllowed()) return;
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - (r.left + r.width / 2);
+      const y = e.clientY - (r.top + r.height / 2);
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        el.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+      });
+    };
+    const onLeave = () => { cancelAnimationFrame(raf); el.style.transform = ''; };
+    el.addEventListener('mousemove', onMove);
+    el.addEventListener('mouseleave', onLeave);
+    return () => {
+      el.removeEventListener('mousemove', onMove);
+      el.removeEventListener('mouseleave', onLeave);
+      cancelAnimationFrame(raf);
+    };
+  }, [strength]);
+  return ref;
+}
+
+// Card FX — 3D tilt toward the pointer + a spotlight glow that tracks it.
+// Spotlight (--mx/--my) runs even in calm mode; only the tilt transform is gated.
+function useCardFx(maxTilt = 7) {
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let raf = 0;
+    const onMove = (e) => {
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width;
+      const py = (e.clientY - r.top) / r.height;
+      el.style.setProperty('--mx', `${px * 100}%`);
+      el.style.setProperty('--my', `${py * 100}%`);
+      if (!motionAllowed()) return;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        el.style.transform =
+          `perspective(900px) rotateX(${(0.5 - py) * maxTilt}deg) rotateY(${(px - 0.5) * maxTilt}deg)`;
+      });
+    };
+    const onLeave = () => { cancelAnimationFrame(raf); el.style.transform = ''; };
+    el.addEventListener('mousemove', onMove);
+    el.addEventListener('mouseleave', onLeave);
+    return () => {
+      el.removeEventListener('mousemove', onMove);
+      el.removeEventListener('mouseleave', onLeave);
+      cancelAnimationFrame(raf);
+    };
+  }, [maxTilt]);
+  return ref;
+}
+
+// Magnetic — drop-in wrapper that makes any element magnetic.
+function Magnetic({ as = 'a', strength = 0.28, children, ...rest }) {
+  const ref = useMagnetic(strength);
+  const Tag = as;
+  return <Tag ref={ref} {...rest}>{children}</Tag>;
+}
+
+Object.assign(window, { useScramble, Scramble, Typewriter, Reveal, Counter, BootSequence, LiveClock, useActiveSection, useMagnetic, useCardFx, Magnetic });
