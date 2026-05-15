@@ -76,6 +76,10 @@ function Hero() {
               <span>./explore_work</span>
               <span className="arrow">→</span>
             </Magnetic>
+            <Magnetic as="a" className="btn btn-ghost" href="https://drive.google.com/file/d/1vByHZg0N65Y7Sa9Znm7YcFszSULQ6peN/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+              <span>my_cv.pdf</span>
+              <span className="arrow">↗</span>
+            </Magnetic>
             <Magnetic as="a" className="btn btn-ghost" href="#contact">
               <span>contact()</span>
               <span className="arrow">→</span>
