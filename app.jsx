@@ -4,10 +4,10 @@
 function Nav() {
   const progress = useScrollProgress();
   const links = [
-    { id: 'about', n: '01', label: 'about' },
-    { id: 'projects', n: '02', label: 'projects' },
-    { id: 'education', n: '03', label: 'education' },
-    { id: 'awards', n: '04', label: 'awards' },
+    { id: 'projects', n: '01', label: 'projects' },
+    { id: 'awards', n: '02', label: 'awards' },
+    { id: 'about', n: '03', label: 'about' },
+    { id: 'education', n: '04', label: 'education' },
     { id: 'contact', n: '05', label: 'contact' },
   ];
   const active = useActiveSection(['hero', ...links.map((l) => l.id)]);
@@ -204,10 +204,10 @@ function App() {
       <div className="shell">
         <Nav />
         <Hero />
-        <About />
         <Sokolus />
-        <Education />
         <Awards />
+        <About />
+        <Education />
         <Contact />
         <Footer />
       </div>

@@ -179,7 +179,7 @@ function About() {
   return (
     <section className="section" id="about" data-screen-label="about">
       <div className="container">
-        <SectionHead num="01" label="// About" />
+        <SectionHead num="03" label="// About" />
         <Reveal as="h2" className="section-title" delay={1}>
           Engineering meets <span className="accent">entrepreneurship</span>.
         </Reveal>
@@ -218,7 +218,7 @@ function About() {
             { num: 1, suffix: 'st', label: 'National Innovation Competition' },
             { num: 3, suffix: '', label: 'Countries Studied / Worked In' },
             { num: 5, suffix: '+', label: 'Programming Languages' },
-            { num: 1, suffix: ' v', label: 'Working Prototype Built' },
+            { num: 1, suffix: '', label: 'v1 Prototype Shipped' },
           ].map((s, i) => (
             <Reveal key={i} className="stat" delay={Math.min(i + 1, 4)}>
               <div className="stat-num"><Counter to={s.num} suffix={s.suffix} /></div>
@@ -231,6 +231,68 @@ function About() {
   );
 }
 
+// ── TripVice globe art ────────────────────────────────────────────────────────
+function TripViceArt() {
+  return (
+    <svg width="136" height="136" viewBox="0 0 136 136" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="tvGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#c5ff36" stopOpacity="0.18"/>
+          <stop offset="100%" stopColor="#c5ff36" stopOpacity="0"/>
+        </radialGradient>
+      </defs>
+
+      {/* Ambient glow */}
+      <circle cx="68" cy="68" r="68" fill="url(#tvGlow)"/>
+
+      {/* Globe latitude lines */}
+      <ellipse cx="68" cy="68" rx="54" ry="54" stroke="#c5ff36" strokeOpacity="0.1" strokeWidth="0.75" fill="none"/>
+      <ellipse cx="68" cy="68" rx="54" ry="30" stroke="#c5ff36" strokeOpacity="0.08" strokeWidth="0.75" fill="none"/>
+      <ellipse cx="68" cy="68" rx="54" ry="11" stroke="#c5ff36" strokeOpacity="0.05" strokeWidth="0.75" fill="none"/>
+      {/* Globe longitude lines */}
+      <ellipse cx="68" cy="68" rx="30" ry="54" stroke="#c5ff36" strokeOpacity="0.07" strokeWidth="0.75" fill="none"/>
+      <line x1="68" y1="14" x2="68" y2="122" stroke="#c5ff36" strokeOpacity="0.07" strokeWidth="0.75"/>
+      <line x1="14" y1="68" x2="122" y2="68" stroke="#c5ff36" strokeOpacity="0.07" strokeWidth="0.75"/>
+
+      {/* Flight arc BEG → DOH */}
+      <path id="tv-flight" d="M 28 94 Q 68 22 112 68"
+            stroke="#c5ff36" strokeWidth="1.5" strokeDasharray="5 4"
+            strokeOpacity="0.65" fill="none"/>
+
+      {/* BEG city — pulsing dot */}
+      <circle cx="28" cy="94" r="4.5" fill="#c5ff36" fillOpacity="0.9"/>
+      <circle cx="28" cy="94" r="4.5" fill="none" stroke="#c5ff36" strokeWidth="1">
+        <animate attributeName="r" values="4.5;14" dur="2.6s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.7;0" dur="2.6s" repeatCount="indefinite"/>
+      </circle>
+      <text x="28" y="112" textAnchor="middle"
+            style={{ fill: '#c5ff36', fontSize: '8px', fontFamily: "'JetBrains Mono', monospace", fontWeight: 600 }}>BEG</text>
+
+      {/* DOH city — pulsing dot */}
+      <circle cx="112" cy="68" r="4" fill="#c5ff36" fillOpacity="0.7"/>
+      <circle cx="112" cy="68" r="4" fill="none" stroke="#c5ff36" strokeWidth="1">
+        <animate attributeName="r" values="4;12" dur="2.6s" begin="1.3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0" dur="2.6s" begin="1.3s" repeatCount="indefinite"/>
+      </circle>
+      <text x="112" y="86" textAnchor="middle"
+            style={{ fill: '#c5ff36', fontSize: '8px', fontFamily: "'JetBrains Mono', monospace", fontWeight: 600, opacity: 0.75 }}>DOH</text>
+
+      {/* Animated plane */}
+      <text textAnchor="middle" dominantBaseline="middle"
+            style={{ fill: '#c5ff36', fontSize: '13px' }}>
+        ✈
+        <animateMotion dur="4s" repeatCount="indefinite" rotate="auto">
+          <mpath href="#tv-flight"/>
+        </animateMotion>
+      </text>
+
+      {/* Price badge */}
+      <text x="69" y="47" textAnchor="middle"
+            style={{ fill: '#c5ff36', fontSize: '11px', fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, opacity: 0.9 }}>$189</text>
+    </svg>
+  );
+}
+
 // ── Projects ──────────────────────────────────────────────────────────────────
 function Sokolus() {
   const sokolusCard = useCardFx();
@@ -238,7 +300,7 @@ function Sokolus() {
   return (
     <section className="section" id="projects" data-screen-label="projects">
       <div className="container">
-        <SectionHead num="02" label="// Projects" />
+        <SectionHead num="01" label="// Projects" />
         <Reveal as="h2" className="section-title" delay={1}>
           Building things that <span className="accent">matter</span>.
         </Reveal>
@@ -297,8 +359,7 @@ function Sokolus() {
           <Reveal className="project-card" delay={3} innerRef={tripviceCard}>
             <div className="project-card-head">
               <div className="tripvice-art project-art" style={{ margin: '0 auto 24px' }}>
-                <div className="tripvice-logo">TV</div>
-                <div className="tripvice-tagline">smart trip finder</div>
+                <TripViceArt />
               </div>
               <div className="sokolus-meta">
                 <span className="sokolus-status">Live</span>
@@ -388,7 +449,7 @@ function Education() {
   return (
     <section className="section" id="education" data-screen-label="education">
       <div className="container">
-        <SectionHead num="03" label="// Education" />
+        <SectionHead num="04" label="// Education" />
         <Reveal as="h2" className="section-title" delay={1}>
           Academic <span className="accent">journey</span>.
         </Reveal>
@@ -413,7 +474,7 @@ function Awards() {
   return (
     <section className="section" id="awards" data-screen-label="awards">
       <div className="container">
-        <SectionHead num="04" label="// Recognition" />
+        <SectionHead num="02" label="// Recognition" />
         <Reveal as="h2" className="section-title" delay={1}>
           Awards &amp; <span className="accent">languages</span>.
         </Reveal>
