@@ -167,12 +167,20 @@ function App() {
   });
   const [konamiActive, setKonamiActive] = React.useState(false);
 
-  // Tab title trick
+  // Tab title trick + pause all ambient loops when the tab is hidden.
   React.useEffect(() => {
     const original = document.title;
-    const onVisibility = () => { document.title = document.hidden ? 'come back... :(' : original; };
+    const onVisibility = () => {
+      document.title = document.hidden ? 'come back... :(' : original;
+      if (document.hidden) document.body.setAttribute('data-paused', '');
+      else document.body.removeAttribute('data-paused');
+    };
     document.addEventListener('visibilitychange', onVisibility);
-    return () => { document.removeEventListener('visibilitychange', onVisibility); document.title = original; };
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibility);
+      document.title = original;
+      document.body.removeAttribute('data-paused');
+    };
   }, []);
 
   // Konami code

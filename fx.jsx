@@ -184,7 +184,27 @@ function BootSequence({ onDone }) {
       setExit(true);
       setTimeout(() => onDone(), 400);
     }, 1200);
-    return () => { timers.forEach(clearTimeout); clearTimeout(finish); clearInterval(prog); };
+
+    // Keyboard skip — Enter, Esc, or Space fast-forwards the boot overlay.
+    const onKey = (e) => {
+      if (e.key !== 'Enter' && e.key !== 'Escape' && e.key !== ' ') return;
+      e.preventDefault();
+      timers.forEach(clearTimeout);
+      clearTimeout(finish);
+      clearInterval(prog);
+      setShown(lines.length);
+      setProgress(100);
+      setExit(true);
+      setTimeout(() => onDone(), 200);
+    };
+    window.addEventListener('keydown', onKey);
+
+    return () => {
+      timers.forEach(clearTimeout);
+      clearTimeout(finish);
+      clearInterval(prog);
+      window.removeEventListener('keydown', onKey);
+    };
     // eslint-disable-next-line
   }, []);
 

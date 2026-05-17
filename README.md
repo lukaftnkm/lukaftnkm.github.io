@@ -4,7 +4,7 @@ Live at: [lukaftnkm.github.io](https://lukaftnkm.github.io)
 
 ## Overview
 
-Personal portfolio website for Luka Đelošević — Master's student in Electrical & Computer Engineering, co-founder of [Sokolus](https://sokolus.rs), InnovNation Serbia 2025 winner, and Web Summit Qatar 2026 speaker.
+Personal portfolio website for Luka Đelošević — Master's student in Electrical & Computer Engineering, co-founder of [Sokolus](https://sokolus.rs) and [TripVice](https://tripvice.net), InnovNation Serbia 2025 winner, and Web Summit Qatar 2026 speaker.
 
 ## Stack
 
@@ -25,11 +25,10 @@ Personal portfolio website for Luka Đelošević — Master's student in Electri
 
 1. **Hero** — introduction with terminal widget
 2. **About** — background, Erasmus, and stats
-3. **Startup** — Sokolus story and milestones
+3. **Projects** — Sokolus and TripVice as side-by-side cards
 4. **Education** — academic timeline (BSc → Erasmus → MSc)
-5. **Skills** — programming languages, web, tools, soft skills
-6. **Recognition** — InnovNation award + language proficiencies
-7. **Contact** — email, phone, LinkedIn, GitHub
+5. **Awards** — InnovNation 2025 + Web Summit Qatar 2026
+6. **Contact** — email, phone, LinkedIn, GitHub
 
 ## Deployment
 

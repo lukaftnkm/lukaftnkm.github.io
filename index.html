@@ -877,6 +877,33 @@
     body[data-motion="calm"] .nav-brand .dot,
     body[data-motion="calm"] .hero-name .dot { animation: none !important; }
     body[data-motion="calm"] .reveal { transition-duration: .3s; }
+
+    /* Pause every ambient infinite loop when the tab is hidden. */
+    body[data-paused] *,
+    body[data-paused] *::before,
+    body[data-paused] *::after { animation-play-state: paused !important; }
+
+    /* Honor the OS-level reduced-motion preference, regardless of Tweaks state. */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .grid-bg.animated::after,
+      .scanlines::after,
+      .sokolus-logo,
+      .sokolus-orbit,
+      .nav-brand .dot,
+      .hero-name .dot,
+      .nav-meta .live::before,
+      .sokolus-status::before,
+      .tl-item[data-current="true"]::before,
+      .term-cursor { animation: none !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .boot { display: none !important; }
+    }
   </style>
 
   <script>
