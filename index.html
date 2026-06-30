@@ -738,6 +738,95 @@
       text-transform: uppercase;
     }
 
+    /* ───── certificates ───── */
+    .cert-group { margin-bottom: 52px; }
+    .cert-group:last-child { margin-bottom: 0; }
+    .cert-group-head {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 22px;
+      font-size: 12px; color: var(--text-dim);
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .cert-group-head .gtag {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 20px; height: 20px;
+      border: 1px solid var(--accent);
+      border-radius: 5px;
+      color: var(--accent); font-weight: 700; font-size: 11px;
+    }
+    .cert-group-head .gline { flex: 1; height: 1px; background: var(--border); }
+    .cert-group-head .gcount {
+      color: var(--text-dimmer); font-size: 11px;
+      font-variant-numeric: tabular-nums; letter-spacing: 0.04em;
+    }
+
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 900px) { .cert-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .cert-grid { grid-template-columns: 1fr; } }
+
+    .cert-card {
+      --mx: 50%; --my: 50%;
+      position: relative;
+      display: flex; flex-direction: column; gap: 14px;
+      padding: 22px 22px 20px;
+      min-height: 188px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--panel);
+      transition: border-color .2s ease, transform .25s cubic-bezier(.2,.7,.3,1);
+      transform-style: preserve-3d;
+      will-change: transform;
+      overflow: hidden;
+    }
+    .cert-card:hover { border-color: var(--border-strong); }
+    .cert-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: inherit; pointer-events: none;
+      background: radial-gradient(320px circle at var(--mx) var(--my),
+        color-mix(in oklab, var(--accent) 11%, transparent), transparent 60%);
+      opacity: 0; transition: opacity .3s ease;
+    }
+    .cert-card:hover::after { opacity: 1; }
+    body[data-motion="calm"] .cert-card { transform: none !important; }
+    a.cert-card { color: inherit; text-decoration: none; }
+
+    .cert-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .cert-type {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 10px;
+      font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--border-strong);
+      border-radius: 999px;
+      background: rgba(255,255,255,.02);
+    }
+    .cert-type::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+    .cert-idx { font-size: 11px; color: var(--text-faint); font-variant-numeric: tabular-nums; }
+
+    .cert-title {
+      margin: 0;
+      font-size: 15px; font-weight: 600; line-height: 1.4;
+      letter-spacing: -0.01em; color: var(--text);
+    }
+    .cert-foot { margin-top: auto; display: flex; flex-direction: column; gap: 5px; }
+    .cert-issuer { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
+    .cert-date {
+      font-size: 11px; color: var(--text-dimmer);
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .cert-link {
+      display: inline-flex; align-items: center; gap: 7px;
+      margin-top: 4px;
+      font-size: 11px; color: var(--accent); letter-spacing: 0.04em;
+    }
+    .cert-link .arrow { transition: transform .15s ease; }
+    .cert-card:hover .cert-link .arrow { transform: translate(3px, -3px); }
+
     /* ───── contact ───── */
     .contact-grid {
       display: grid;
@@ -802,7 +891,7 @@
       will-change: transform;
     }
     /* beat .reveal's .8s transform transition so tilt feels responsive */
-    .reveal.project-card, .reveal.award-card {
+    .reveal.project-card, .reveal.award-card, .reveal.cert-card {
       transition:
         opacity .8s cubic-bezier(.2,.7,.3,1),
         transform .25s cubic-bezier(.2,.7,.3,1),

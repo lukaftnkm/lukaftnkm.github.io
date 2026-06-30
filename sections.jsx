@@ -516,6 +516,81 @@ function Awards() {
   );
 }
 
+// ── Certificates ──────────────────────────────────────────────────────────────
+function CertCard({ item, idx, pos }) {
+  const fx = useCardFx(6);
+  const body = (
+    <>
+      <div className="cert-top">
+        <span className="cert-type">{item.type}</span>
+        <span className="cert-idx">{String(idx).padStart(2, '0')}</span>
+      </div>
+      <h4 className="cert-title">{item.title}</h4>
+      <div className="cert-foot">
+        {item.issuer && <span className="cert-issuer">{item.issuer}</span>}
+        {item.date && <span className="cert-date">{item.date}</span>}
+        {item.href && (
+          <span className="cert-link">{item.cta || 'view certificate'} <span className="arrow">↗</span></span>
+        )}
+      </div>
+    </>
+  );
+  const common = { className: 'cert-card', innerRef: fx, delay: Math.min((pos % 3) + 1, 4) };
+  return item.href
+    ? <Reveal as="a" href={item.href} target="_blank" rel="noopener noreferrer" {...common}>{body}</Reveal>
+    : <Reveal {...common}>{body}</Reveal>;
+}
+
+function Certificates() {
+  // To attach a certificate, fill in `href` (Drive/PDF/image link). Empty href
+  // renders a plain card. `issuer` and `date` are optional and only show if set.
+  const groups = [
+    {
+      tag: 'A', label: 'Certificates & Trainings',
+      items: [
+        { type: 'Training', title: 'Inclusive UX Design for Human–Machine Interaction in Industry 5.0: Robotics, AI, LLMs, and XR', issuer: 'EIT Higher Education Initiative', date: 'Oct–Dec 2025', href: 'certificates/eit-inclusive-ux-hmi.pdf' },
+        { type: 'Training', title: 'Setting Up Shared Entrepreneurial and Research Infrastructures and Test Beds', issuer: 'EIT Higher Education Initiative', date: 'Oct–Dec 2025', href: 'certificates/eit-shared-infrastructures.pdf' },
+        { type: 'Training', title: 'Entrepreneurial Transformation', issuer: 'EIT Higher Education Initiative', date: 'Oct–Dec 2025', href: 'certificates/eit-entrepreneurial-transformation.pdf' },
+        { type: 'Certificate', title: 'Programming Basics with JavaScript', issuer: 'SoftUni · 71% assessment', date: 'Apr 2024', href: 'certificates/softuni-js-basics.pdf' },
+        { type: 'Diploma', title: 'BSc — Electrical & Computer Engineering', issuer: 'University of Pristina · FTN · GPA 8.09', date: '2025', href: 'certificates/bsc-diploma.pdf', cta: 'view diploma' },
+      ],
+    },
+    {
+      tag: 'B', label: 'Programs & Participations',
+      items: [
+        { type: 'Program', title: 'InteRussia Program — AI in Medicine', issuer: 'Novosibirsk, Russia', date: '', href: '' },
+      ],
+    },
+  ];
+  let running = 0;
+  return (
+    <section className="section" id="certificates" data-screen-label="certificates">
+      <div className="container">
+        <SectionHead num="05" label="// Certificates" />
+        <Reveal as="h2" className="section-title" delay={1}>
+          Credentials &amp; <span className="accent">programs</span>.
+        </Reveal>
+        {groups.map((g) => (
+          <div className="cert-group" key={g.tag}>
+            <Reveal className="cert-group-head">
+              <span className="gtag">{g.tag}</span>
+              <span>{g.label}</span>
+              <span className="gline" />
+              <span className="gcount">{String(g.items.length).padStart(2, '0')} {g.items.length === 1 ? 'item' : 'items'}</span>
+            </Reveal>
+            <div className="cert-grid">
+              {g.items.map((item, i) => {
+                running += 1;
+                return <CertCard key={running} item={item} idx={running} pos={i} />;
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 // ── Contact ───────────────────────────────────────────────────────────────────
 function Contact() {
   const channels = [
@@ -529,7 +604,7 @@ function Contact() {
   return (
     <section className="section" id="contact" data-screen-label="contact">
       <div className="container">
-        <SectionHead num="05" label="// Contact" />
+        <SectionHead num="06" label="// Contact" />
         <Reveal as="h2" className="section-title" delay={1}>
           Let's <span className="accent">connect</span>.
         </Reveal>
@@ -576,4 +651,4 @@ function Footer() {
   );
 }
 
-Object.assign(window, { About, Sokolus, Education, Awards, Contact, Footer });
+Object.assign(window, { About, Sokolus, Education, Awards, Certificates, Contact, Footer });

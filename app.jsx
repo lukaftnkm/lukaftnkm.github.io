@@ -8,7 +8,8 @@ function Nav() {
     { id: 'awards', n: '02', label: 'awards' },
     { id: 'about', n: '03', label: 'about' },
     { id: 'education', n: '04', label: 'education' },
-    { id: 'contact', n: '05', label: 'contact' },
+    { id: 'certificates', n: '05', label: 'certs' },
+    { id: 'contact', n: '06', label: 'contact' },
   ];
   const active = useActiveSection(['hero', ...links.map((l) => l.id)]);
   return (
@@ -134,7 +135,7 @@ function Hero() {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
             <span>scroll<span style={{ color: 'var(--accent)' }}>↓</span></span>
-            <span style={{ color: 'var(--text-dim)' }}>006 · sections</span>
+            <span style={{ color: 'var(--text-dim)' }}>007 · sections</span>
           </div>
         </div>
       </div>
@@ -216,6 +217,7 @@ function App() {
         <Awards />
         <About />
         <Education />
+        <Certificates />
         <Contact />
         <Footer />
       </div>
