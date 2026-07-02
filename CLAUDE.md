@@ -2,7 +2,7 @@
 
 ## What this is
 
-Single-page personal portfolio for **Luka Đelošević** hosted on GitHub Pages at `lukaftnkm.github.io`. **No build step** — React 18 + Babel are loaded from CDNs and the app is authored in plain `.jsx` files compiled in the browser.
+Single-page personal portfolio for **Luka Đelošević** hosted on GitHub Pages at `lukaftnkm.github.io`. **No bundler** — React 18 is loaded from a CDN; the app is authored in plain `.jsx` files precompiled to `dist/*.js` with Babel (`npm run build`). The compiled `dist/` is committed so Pages serves it directly.
 
 ## Owner
 
@@ -24,9 +24,9 @@ Single-page personal portfolio for **Luka Đelošević** hosted on GitHub Pages 
 - Degree progress: BSc completed 2025 (240 ECTS, GPA 8.09, module Computing & Informatics); MSc in progress 2025–present
 - Certificates: 3× EIT Higher Education Initiative trainings (2025), SoftUni JavaScript (2024), BSc Diploma; InteRussia program (Novosibirsk, AI in Medicine)
 
-## Architecture (no build system)
+## Architecture (no bundler; one Babel compile step)
 
-`index.html` is the shell: it holds **all CSS** (in one `<style>`), the boot/tweaks bootstrap script, a `#root` div, and `<script type="text/babel" src="...">` tags that load four JSX files **in order**:
+`index.html` is the shell: it holds **all CSS** (in one `<style>`), the boot/tweaks bootstrap script, a `#root` div, and plain `<script src="dist/...">` tags that load the four compiled files **in order**. The `.jsx` files are the source of truth — after editing them run `npm run build` (or `npm run watch`) to regenerate `dist/`:
 
 | File | Contents |
 |---|---|
@@ -35,7 +35,7 @@ Single-page personal portfolio for **Luka Đelošević** hosted on GitHub Pages 
 | `sections.jsx` | Section components: `About`, `Sokolus` (Projects), `Education`, `Awards`, `Certificates`, `Contact`, `Footer` — exported via `Object.assign(window, {...})` |
 | `app.jsx` | `Nav`, `Hero`, `App` composition, `TWEAK_DEFAULTS`, and `ReactDOM.createRoot(...).render(<App/>)` |
 
-Babel compiles each `<script type="text/babel">` as a **classic script** (not a module), so top-level `function` declarations are global and shared across files. Files must stay loaded in the order above.
+Each file compiles as a **classic script** (not a module — the build passes `--source-type script`), so top-level `function`/`const` declarations are global and shared across files. Files must stay loaded in the order above, and `dist/` must be rebuilt and committed alongside any `.jsx` change.
 
 ## Design system (actual)
 
@@ -68,13 +68,14 @@ Hero → Projects `01` → Recognition/Awards `02` → About `03` → Education 
 ## Deployment
 
 - Repo: `https://github.com/lukaftnkm/lukaftnkm.github.io`
-- Branch `main` → GitHub Pages auto-deploys. No CI, no build step — push and it's live.
-- The site **must be served over HTTP** (Babel fetches the `.jsx` files); `file://` is blocked by CORS. For local preview: `python -m http.server 8000` then open `http://127.0.0.1:8000`.
+- Branch `main` → GitHub Pages auto-deploys. No CI — run `npm run build`, commit the updated `dist/`, push, and it's live.
+- For local preview: `python -m http.server 8000` then open `http://127.0.0.1:8000` (serving over HTTP keeps parity with production).
 
 ## Editing guidelines
 
-- Keep CSS in `index.html`; keep components in the JSX files. Don't introduce a build step or framework bundler.
+- Keep CSS in `index.html`; keep components in the JSX files. The only build tooling is the Babel JSX compile (`npm run build`) — don't introduce a bundler or framework beyond that.
 - Maintain the dark terminal aesthetic and the lime accent (`--accent`).
 - Reuse existing primitives (`Reveal`, `SectionHead`, `useCardFx`, `Magnetic`, `Counter`) rather than re-implementing motion.
 - Section labels follow `// Name`; section numbers `01`…`06` track render order — renumber consistently when inserting a section.
-- Mobile breakpoints in use: 980/900px (stack grids, hide nav links), 720/600/560px (tighten spacing, hamburger-less compact nav, single-column grids).
+- Mobile breakpoints in use: 980/900px (stack grids; nav links become a horizontally scrollable strip under the brand row — no hamburger), 720/600/560px (tighten spacing, stack contact channels, single-column grids).
+- Strategic/visual design context lives in `PRODUCT.md` and `DESIGN.md` (root); keep them in sync with design changes.

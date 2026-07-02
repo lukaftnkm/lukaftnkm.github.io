@@ -1,0 +1,14 @@
+{
+  "name": "lukaftnkm.github.io",
+  "private": true,
+  "description": "Personal portfolio — JSX sources compile to dist/ (npm run build); GitHub Pages serves the repo as-is.",
+  "scripts": {
+    "build": "babel --source-type script --presets @babel/preset-react tweaks-panel.jsx fx.jsx sections.jsx app.jsx --out-dir dist",
+    "watch": "npm run build -- --watch"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.28.3",
+    "@babel/core": "^7.28.4",
+    "@babel/preset-react": "^7.27.1"
+  }
+}

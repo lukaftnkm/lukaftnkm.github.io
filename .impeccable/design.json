@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-02T00:00:00Z",
+  "title": "Design System: luka.dev",
+  "extensions": {
+    "colorMeta": {
+      "terminal-black": { "role": "neutral", "displayName": "Terminal Black", "canonical": "#08090b", "tonalRamp": ["#08090b", "#0c0e11", "#14171c", "#1f232a", "#343a44", "#565e6b", "#8a919c", "#c6cbd2"] },
+      "console-panel": { "role": "neutral", "displayName": "Console Panel", "canonical": "#0c0e11", "tonalRamp": ["#0c0e11", "#12151a", "#1a1e25", "#262b34", "#3b424e", "#5d6572", "#909734", "#c9cdd4"] },
+      "phosphor-white": { "role": "neutral", "displayName": "Phosphor White", "canonical": "#e8ebe4", "tonalRamp": ["#24261f", "#3c3f35", "#565a4d", "#737868", "#929786", "#b3b7a8", "#d0d3c8", "#e8ebe4"] },
+      "phosphor-lime": { "role": "primary", "displayName": "Phosphor Lime", "canonical": "#c5ff36", "tonalRamp": ["#2a3a02", "#3f5605", "#57750a", "#719612", "#8cb81d", "#a8db29", "#c5ff36", "#dcff85"] },
+      "alert-red": { "role": "danger", "displayName": "Alert Red", "canonical": "#ff5d4d", "tonalRamp": ["#4a0d06", "#6d160c", "#912215", "#b53222", "#d94533", "#ff5d4d", "#ff8a7d", "#ffb7ae"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero name only — 800 weight, -0.055em tracking." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles with one lime-accented word." },
+      "body": { "displayName": "Body", "purpose": "14px base, 16–17px prose capped at 46–56ch." },
+      "label": { "displayName": "Label", "purpose": "Uppercase tracked metadata: section heads, chips, dates." }
+    },
+    "shadows": [
+      { "name": "window-float", "value": "0 30px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.02) inset", "purpose": "Terminal windows only — the single true drop shadow in the system." },
+      { "name": "signal-glow", "value": "0 0 12px var(--accent, #c5ff36)", "purpose": "Live dots and the nav progress bar." }
+    ],
+    "motion": [
+      { "name": "ease-reveal", "value": "cubic-bezier(.2,.7,.3,1)", "purpose": "Scroll reveals, tilt return, bar fills — the house exponential ease-out." },
+      { "name": "duration-reveal", "value": "0.8s", "purpose": "Reveal-on-scroll opacity/transform." },
+      { "name": "duration-state", "value": "0.15s–0.2s", "purpose": "Hover and border-color state changes." }
+    ],
+    "breakpoints": [
+      { "name": "nav-collapse", "value": "900px" },
+      { "name": "grid-stack", "value": "980px" },
+      { "name": "spacing-tight", "value": "720px" },
+      { "name": "meta-hide", "value": "600px" },
+      { "name": "single-column-certs", "value": "560px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Lime-filled CTA; hero actions.",
+      "html": "<a class=\"ds-btn ds-btn-primary\"><span>./explore_work</span><span class=\"ds-arrow\">→</span></a>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; font-weight: 500; border-radius: 8px; border: 1px solid transparent; cursor: pointer; text-decoration: none; transition: transform .15s ease, background .15s ease, border-color .15s ease; } .ds-btn:hover { transform: translateY(-1px); } .ds-btn .ds-arrow { transition: transform .15s ease; } .ds-btn:hover .ds-arrow { transform: translateX(3px); } .ds-btn-primary { background: var(--accent, #c5ff36); color: #0a0b0a; font-weight: 600; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Hairline-bordered secondary action; border and text turn lime on hover.",
+      "html": "<a class=\"ds-btn ds-btn-ghost\"><span>contact()</span><span class=\"ds-arrow\">→</span></a>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; font-weight: 500; border-radius: 8px; border: 1px solid transparent; cursor: pointer; text-decoration: none; transition: transform .15s ease, border-color .15s ease, color .15s ease; } .ds-btn:hover { transform: translateY(-1px); } .ds-btn-ghost { background: #08090b; border-color: rgba(232,235,228,.16); color: #e8ebe4; } .ds-btn-ghost:hover { border-color: var(--accent, #c5ff36); color: var(--accent, #c5ff36); }"
+    },
+    {
+      "name": "Credential Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Static pill marking a credential; leading lime dot, never interactive.",
+      "html": "<span class=\"ds-chip\">InnovNation '25 Winner</span>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: rgba(232,235,228,.58); border: 1px solid rgba(232,235,228,.16); border-radius: 999px; background: #0c0e11; } .ds-chip::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent, #c5ff36); }"
+    },
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "description": "Numbered section link; dim number + label, lime when active via scroll-spy.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link\" data-active=\"true\"><span class=\"ds-num\">01</span><span>projects</span></a><a class=\"ds-nav-link\"><span class=\"ds-num\">02</span><span>awards</span></a><a class=\"ds-nav-link\"><span class=\"ds-num\">03</span><span>about</span></a></nav>",
+      "css": ".ds-nav { display: flex; gap: 4px; background: #08090b; padding: 8px; } .ds-nav-link { display: flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 6px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: rgba(232,235,228,.58); text-decoration: none; cursor: pointer; transition: color .15s ease, background .15s ease; } .ds-nav-link:hover { color: #e8ebe4; background: rgba(255,255,255,.04); } .ds-nav-link[data-active=\"true\"] { color: var(--accent, #c5ff36); } .ds-nav-link .ds-num { color: rgba(232,235,228,.36); font-size: 10px; }"
+    },
+    {
+      "name": "Terminal Window",
+      "kind": "card",
+      "refersTo": "terminal",
+      "description": "Signature component — traffic-light chrome over Console Panel; contents must be live (typewriter or interactive shell).",
+      "html": "<div class=\"ds-term\"><div class=\"ds-term-head\"><span class=\"ds-dot ds-r\"></span><span class=\"ds-dot ds-y\"></span><span class=\"ds-dot ds-g\"></span><span class=\"ds-term-title\">luka@portfolio:~</span></div><div class=\"ds-term-body\"><span class=\"ds-line\"><span class=\"ds-prompt\">$</span> whoami</span><span class=\"ds-line\">Luka Đelošević</span><span class=\"ds-line\"><span class=\"ds-prompt\">$</span> <span class=\"ds-cursor\"></span></span></div></div>",
+      "css": ".ds-term { background: #0c0e11; border: 1px solid rgba(232,235,228,.16); border-radius: 12px; overflow: hidden; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; color: #e8ebe4; box-shadow: 0 30px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.02) inset; min-width: 280px; } .ds-term-head { display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-bottom: 1px solid rgba(232,235,228,.08); background: rgba(255,255,255,.02); } .ds-dot { width: 10px; height: 10px; border-radius: 50%; } .ds-r { background: #ff5f57; } .ds-y { background: #febc2e; } .ds-g { background: #28c840; } .ds-term-title { margin-left: 10px; font-size: 11px; color: rgba(232,235,228,.58); letter-spacing: 0.04em; } .ds-term-body { padding: 18px; } .ds-line { display: block; min-height: 1.55em; line-height: 1.55; } .ds-prompt { color: var(--accent, #c5ff36); } .ds-cursor { display: inline-block; width: 9px; height: 16px; background: var(--accent, #c5ff36); vertical-align: text-bottom; animation: ds-blink 1s steps(2,end) infinite; } @keyframes ds-blink { 50% { opacity: 0; } }"
+    },
+    {
+      "name": "Certificate Card",
+      "kind": "card",
+      "description": "Panel-wash card with type pill, index, and pointer-tracking lime spotlight; whole card is the link when an href exists.",
+      "html": "<a class=\"ds-cert\"><div class=\"ds-cert-top\"><span class=\"ds-cert-type\">Training</span><span class=\"ds-cert-idx\">01</span></div><h4 class=\"ds-cert-title\">Entrepreneurial Transformation</h4><div class=\"ds-cert-foot\"><span class=\"ds-cert-issuer\">EIT Higher Education Initiative</span><span class=\"ds-cert-link\">view certificate ↗</span></div></a>",
+      "css": ".ds-cert { display: flex; flex-direction: column; gap: 14px; padding: 22px; min-height: 180px; border: 1px solid rgba(232,235,228,.08); border-radius: 12px; background: #0b0c0f; font-family: 'JetBrains Mono', ui-monospace, monospace; color: #e8ebe4; text-decoration: none; cursor: pointer; transition: border-color .2s ease; max-width: 320px; } .ds-cert:hover { border-color: rgba(232,235,228,.16); } .ds-cert-top { display: flex; align-items: center; justify-content: space-between; } .ds-cert-type { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent, #c5ff36); border: 1px solid rgba(232,235,228,.16); border-radius: 999px; } .ds-cert-type::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent, #c5ff36); } .ds-cert-idx { font-size: 11px; color: rgba(232,235,228,.18); } .ds-cert-title { margin: 0; font-size: 15px; font-weight: 600; line-height: 1.4; } .ds-cert-foot { margin-top: auto; display: flex; flex-direction: column; gap: 5px; } .ds-cert-issuer { font-size: 12px; color: rgba(232,235,228,.58); } .ds-cert-link { font-size: 11px; color: var(--accent, #c5ff36); letter-spacing: .04em; }"
+    },
+    {
+      "name": "Contact Channel",
+      "kind": "custom",
+      "description": "Full-width contact row; slides right with a lime gradient wash on hover.",
+      "html": "<a class=\"ds-channel\"><span class=\"ds-channel-key\">email</span><span class=\"ds-channel-val\">djelosevicluka002@gmail.com</span><span class=\"ds-channel-arrow\">→</span></a>",
+      "css": ".ds-channel { display: grid; grid-template-columns: 90px 1fr auto; gap: 20px; padding: 22px 6px; align-items: center; border-top: 1px solid rgba(232,235,228,.08); border-bottom: 1px solid rgba(232,235,228,.08); background: #08090b; font-family: 'JetBrains Mono', ui-monospace, monospace; color: #e8ebe4; text-decoration: none; cursor: pointer; transition: padding-left .2s ease, background .2s ease; min-width: 320px; } .ds-channel:hover { padding-left: 18px; background: linear-gradient(90deg, rgba(197,255,54,.18), transparent); } .ds-channel-key { font-size: 11px; color: rgba(232,235,228,.36); letter-spacing: .06em; text-transform: uppercase; } .ds-channel-val { font-size: 16px; font-weight: 500; overflow-wrap: anywhere; } .ds-channel-arrow { color: rgba(232,235,228,.58); transition: transform .2s ease, color .2s ease; } .ds-channel:hover .ds-channel-arrow { color: var(--accent, #c5ff36); transform: translateX(4px); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Live Terminal",
+    "overview": "The site is a running machine the visitor is logged into. It boots, it has a shell you can actually type into, a clock ticking Belgrade time, pulsing status dots, and a cursor that blinks. Nothing is decoration pretending to be a terminal; the terminal artifacts (scanlines, phosphor tint, mono type) frame real interactivity. The playfulness is the proof of engineering skill. The system explicitly rejects the generic template portfolio — no centered hero with icon-card grids, no purple gradients, no stock photography, no sterile corporate white — and equally rejects costume terminals: if an element looks alive, it must actually be running.",
+    "keyCharacteristics": [
+      "Single mono family (JetBrains Mono) carrying the entire hierarchy through weight and scale contrast (800 display down to 400 body).",
+      "One saturated accent — phosphor lime #c5ff36 — on a near-black, green-tinted neutral field (Committed color strategy).",
+      "Flat surfaces separated by hairline borders; depth comes from glow, not shadow.",
+      "Ambient motion everywhere, but every loop respects calm mode, prefers-reduced-motion, and pauses when the tab hides.",
+      "The accent and font are user-tweakable at runtime; the system must look right under any accent hue."
+    ],
+    "rules": [
+      { "name": "The Phosphor Rule", "body": "Pure #fff and pure #000 are forbidden. Every neutral is tinted toward the green phosphor family (#e8ebe4 / #08090b).", "section": "colors" },
+      { "name": "The Live Accent Rule", "body": "The accent is a variable, not a color. Always var(--accent); derive tints with color-mix. A hardcoded #c5ff36 in CSS breaks the Tweaks panel contract (SVG art is the one tolerated exception).", "section": "colors" },
+      { "name": "The Alert Exception", "body": "Alert Red (#ff5d4d) appears only for errors (shell 'command not found') and the red traffic-light dot. It never decorates.", "section": "colors" },
+      { "name": "The One Font Rule", "body": "A second typeface family is prohibited. If hierarchy fails, push weight and size further apart (≥1.25 scale ratio), don't add a font.", "section": "typography" },
+      { "name": "The Tracking Slope Rule", "body": "Tracking is negative and proportional to size: -0.055em at display, -0.04em at headline, ~0 at body, positive (+0.05–0.08em) at uppercase labels.", "section": "typography" },
+      { "name": "The Glow-Not-Shadow Rule", "body": "Emphasis glows lime; it does not cast gray. If an element needs elevation, give it a hairline border and a background step.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use var(--accent) for every lime appearance; the Tweaks panel can recolor the whole site at runtime.",
+      "Do give every new animation a calm-mode gate, a prefers-reduced-motion kill, and inclusion in the body[data-paused] pause net.",
+      "Do keep every interactive target ≥44px on touch and reachable without hover.",
+      "Do carry hierarchy with weight and scale inside JetBrains Mono (800/700/600/400; ≥1.25 ratio between steps).",
+      "Do keep sections numbered (01–06) and renumber consistently when inserting one."
+    ],
+    "donts": [
+      "Don't use cyan, the Outfit font, or a light theme — PRODUCT.md names all three as fixed anti-references.",
+      "Don't build generic template portfolio patterns: centered icon-card grids, purple gradients, stock photography, buzzword copy.",
+      "Don't use pure #fff/#000 (The Phosphor Rule) or gray drop shadows for emphasis (The Glow-Not-Shadow Rule).",
+      "Don't add gradient text, side-stripe borders, or glassmorphism cards; the only blur in the system is the nav and Konami backdrop.",
+      "Don't render fake terminal content. A prompt that can't type is costume; every live-looking element must actually run."
+    ]
+  }
+}

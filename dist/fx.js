@@ -1,16 +1,23 @@
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 // fx.jsx — motion + interaction primitives.
 
 const SCRAMBLE_CHARS = '!<>-_\\/[]{}—=+*^?#________';
 
 // Text scramble: cycles random chars then resolves to target.
-function useScramble(target, { active = true, speed = 30, settle = 0.55 } = {}) {
+function useScramble(target, {
+  active = true,
+  speed = 30,
+  settle = 0.55
+} = {}) {
   const [out, setOut] = React.useState(target);
   const rafRef = React.useRef(0);
   const frameRef = React.useRef(0);
   const queueRef = React.useRef([]);
-
   React.useEffect(() => {
-    if (!active) { setOut(target); return; }
+    if (!active) {
+      setOut(target);
+      return;
+    }
     const oldText = out;
     const length = Math.max(oldText.length, target.length);
     const queue = [];
@@ -19,11 +26,16 @@ function useScramble(target, { active = true, speed = 30, settle = 0.55 } = {}) 
       const to = target[i] || '';
       const start = Math.floor(Math.random() * 8);
       const end = start + Math.floor(Math.random() * 16) + 4;
-      queue.push({ from, to, start, end, char: '' });
+      queue.push({
+        from,
+        to,
+        start,
+        end,
+        char: ''
+      });
     }
     queueRef.current = queue;
     frameRef.current = 0;
-
     const tick = () => {
       let complete = 0;
       let result = '';
@@ -51,24 +63,43 @@ function useScramble(target, { active = true, speed = 30, settle = 0.55 } = {}) 
     return () => clearTimeout(rafRef.current);
     // eslint-disable-next-line
   }, [target, active]);
-
   return out;
 }
 
 // Hover-scramble wrapper. Plays scramble once on mount, then re-plays on hover.
-function Scramble({ text, as = 'span', once = false, ...rest }) {
+function Scramble({
+  text,
+  as = 'span',
+  once = false,
+  ...rest
+}) {
   const Tag = as;
   const [trigger, setTrigger] = React.useState(0);
   const [target, setTarget] = React.useState(text);
-  React.useEffect(() => { setTarget(text); }, [text]);
-  const display = useScramble(target, { active: true, speed: 40 });
+  React.useEffect(() => {
+    setTarget(text);
+  }, [text]);
+  const display = useScramble(target, {
+    active: true,
+    speed: 40
+  });
   const keyed = React.useMemo(() => display, [display, trigger]);
-  const onEnter = () => { if (!once) setTrigger(t => t + 1); };
-  return <Tag {...rest} onMouseEnter={onEnter}>{display}</Tag>;
+  const onEnter = () => {
+    if (!once) setTrigger(t => t + 1);
+  };
+  return /*#__PURE__*/React.createElement(Tag, _extends({}, rest, {
+    onMouseEnter: onEnter
+  }), display);
 }
 
 // Typewriter — types `text` character by character, then optionally calls onDone.
-function Typewriter({ text, speed = 28, startDelay = 0, cursor = false, onDone }) {
+function Typewriter({
+  text,
+  speed = 28,
+  startDelay = 0,
+  cursor = false,
+  onDone
+}) {
   const [out, setOut] = React.useState('');
   const [done, setDone] = React.useState(false);
   React.useEffect(() => {
@@ -89,63 +120,74 @@ function Typewriter({ text, speed = 28, startDelay = 0, cursor = false, onDone }
       };
       step();
     }, startDelay);
-    return () => { active = false; clearTimeout(start); clearTimeout(tid); };
+    return () => {
+      active = false;
+      clearTimeout(start);
+      clearTimeout(tid);
+    };
     // eslint-disable-next-line
   }, [text]);
-  return (
-    <>
-      {out}
-      {cursor && !done && <span className="term-cursor" />}
-    </>
-  );
+  return /*#__PURE__*/React.createElement(React.Fragment, null, out, cursor && !done && /*#__PURE__*/React.createElement("span", {
+    className: "term-cursor"
+  }));
 }
 
 // Reveal-on-scroll. Wraps children, applies .in class when intersecting.
-function Reveal({ children, delay = 0, as = 'div', className = '', innerRef, ...rest }) {
+function Reveal({
+  children,
+  delay = 0,
+  as = 'div',
+  className = '',
+  innerRef,
+  ...rest
+}) {
   const ref = React.useRef(null);
-  const setRef = React.useCallback((node) => {
+  const setRef = React.useCallback(node => {
     ref.current = node;
-    if (typeof innerRef === 'function') innerRef(node);
-    else if (innerRef) innerRef.current = node;
+    if (typeof innerRef === 'function') innerRef(node);else if (innerRef) innerRef.current = node;
   }, [innerRef]);
   React.useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
         if (e.isIntersecting) {
           el.classList.add('in');
           io.unobserve(el);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
     io.observe(el);
     return () => io.disconnect();
   }, []);
   const Tag = as;
-  return (
-    <Tag ref={setRef}
-         data-delay={delay || undefined}
-         className={`reveal ${className}`.trim()}
-         {...rest}>
-      {children}
-    </Tag>
-  );
+  return /*#__PURE__*/React.createElement(Tag, _extends({
+    ref: setRef,
+    "data-delay": delay || undefined,
+    className: `reveal ${className}`.trim()
+  }, rest), children);
 }
 
 // Animated counter. Counts from 0 to target on intersect.
-function Counter({ to, suffix = '', duration = 1400 }) {
+function Counter({
+  to,
+  suffix = '',
+  duration = 1400
+}) {
   const ref = React.useRef(null);
   const [val, setVal] = React.useState(0);
   React.useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
         if (!e.isIntersecting) return;
         io.unobserve(el);
         const start = performance.now();
-        const tick = (now) => {
+        const tick = now => {
           const t = Math.min(1, (now - start) / duration);
           const eased = 1 - Math.pow(1 - t, 3);
           setVal(Math.round(to * eased));
@@ -153,31 +195,51 @@ function Counter({ to, suffix = '', duration = 1400 }) {
         };
         requestAnimationFrame(tick);
       });
-    }, { threshold: 0.4 });
+    }, {
+      threshold: 0.4
+    });
     io.observe(el);
     return () => io.disconnect();
   }, [to, duration]);
-  return <span ref={ref}>{val}{suffix}</span>;
+  return /*#__PURE__*/React.createElement("span", {
+    ref: ref
+  }, val, suffix);
 }
 
 // Boot sequence overlay. Once per session.
-function BootSequence({ onDone }) {
-  const lines = [
-    { t: '$ ./init luka.dev', delay: 0 },
-    { t: '> mounting [██████████] 100%', delay: 140, ok: true },
-    { t: '> loading identity ......... ok', delay: 280, ok: true },
-    { t: '> connecting to InnovNation ... ok', delay: 420, ok: true },
-    { t: '> handshake @ Web Summit Qatar ... ok', delay: 560, ok: true },
-    { t: '$ ready_', delay: 760 },
-  ];
+function BootSequence({
+  onDone
+}) {
+  const lines = [{
+    t: '$ ./init luka.dev',
+    delay: 0
+  }, {
+    t: '> mounting [██████████] 100%',
+    delay: 140,
+    ok: true
+  }, {
+    t: '> loading identity ......... ok',
+    delay: 280,
+    ok: true
+  }, {
+    t: '> connecting to InnovNation ... ok',
+    delay: 420,
+    ok: true
+  }, {
+    t: '> handshake @ Web Summit Qatar ... ok',
+    delay: 560,
+    ok: true
+  }, {
+    t: '$ ready_',
+    delay: 760
+  }];
   const [shown, setShown] = React.useState(0);
   const [progress, setProgress] = React.useState(0);
   const [exit, setExit] = React.useState(false);
-
   React.useEffect(() => {
     const timers = lines.map((l, i) => setTimeout(() => setShown(i + 1), l.delay));
     const prog = setInterval(() => {
-      setProgress((p) => Math.min(100, p + 6 + Math.random() * 10));
+      setProgress(p => Math.min(100, p + 6 + Math.random() * 10));
     }, 80);
     const finish = setTimeout(() => {
       setProgress(100);
@@ -195,14 +257,13 @@ function BootSequence({ onDone }) {
       setExit(true);
       setTimeout(() => onDone(), 200);
     };
-    const onKey = (e) => {
+    const onKey = e => {
       if (e.key !== 'Enter' && e.key !== 'Escape' && e.key !== ' ') return;
       e.preventDefault();
       skip();
     };
     window.addEventListener('keydown', onKey);
     window.addEventListener('pointerdown', skip);
-
     return () => {
       timers.forEach(clearTimeout);
       clearTimeout(finish);
@@ -212,22 +273,29 @@ function BootSequence({ onDone }) {
     };
     // eslint-disable-next-line
   }, []);
-
-  return (
-    <div className={`boot ${exit ? 'exit' : ''}`}>
-      <div className="boot-inner">
-        {lines.slice(0, shown).map((l, i) => (
-          <span key={i} className="boot-line">
-            <span className={l.ok ? 'ok' : 'label'}>{l.t}</span>
-          </span>
-        ))}
-        <div className="boot-bar"><i style={{ width: `${progress}%` }} /></div>
-        <span className="boot-line" style={{ marginTop: 10, fontSize: 11, color: 'var(--text-dimmer)' }}>
-          # tap or press enter to skip
-        </span>
-      </div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: `boot ${exit ? 'exit' : ''}`
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "boot-inner"
+  }, lines.slice(0, shown).map((l, i) => /*#__PURE__*/React.createElement("span", {
+    key: i,
+    className: "boot-line"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: l.ok ? 'ok' : 'label'
+  }, l.t))), /*#__PURE__*/React.createElement("div", {
+    className: "boot-bar"
+  }, /*#__PURE__*/React.createElement("i", {
+    style: {
+      width: `${progress}%`
+    }
+  })), /*#__PURE__*/React.createElement("span", {
+    className: "boot-line",
+    style: {
+      marginTop: 10,
+      fontSize: 11,
+      color: 'var(--text-dimmer)'
+    }
+  }, "# tap or press enter to skip")));
 }
 
 // Live clock — Belgrade time, auto-switches CET↔CEST.
@@ -239,14 +307,21 @@ function LiveClock() {
   }, []);
   const time = t.toLocaleTimeString('en-GB', {
     timeZone: 'Europe/Belgrade',
-    hour: '2-digit', minute: '2-digit', second: '2-digit',
-    hour12: false,
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
   });
   const offsetStr = new Intl.DateTimeFormat('en', {
-    timeZone: 'Europe/Belgrade', timeZoneName: 'longOffset',
+    timeZone: 'Europe/Belgrade',
+    timeZoneName: 'longOffset'
   }).formatToParts(t).find(p => p.type === 'timeZoneName')?.value ?? '';
   const label = offsetStr.includes('+02') ? 'CEST' : 'CET';
-  return <span style={{ fontVariantNumeric: 'tabular-nums' }}>{time} {label}</span>;
+  return /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontVariantNumeric: 'tabular-nums'
+    }
+  }, time, " ", label);
 }
 
 // Active-section spy. Returns id of section currently in view.
@@ -262,13 +337,16 @@ function useActiveSection(ids) {
         const r = el.getBoundingClientRect();
         const dist = Math.abs(r.top - 120);
         if (r.top < window.innerHeight * 0.5 && dist < bestDist) {
-          bestDist = dist; best = id;
+          bestDist = dist;
+          best = id;
         }
       }
       setActive(best);
     };
     onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scroll', onScroll, {
+      passive: true
+    });
     return () => window.removeEventListener('scroll', onScroll);
   }, [ids.join(',')]);
   return active;
@@ -284,7 +362,9 @@ function useScrollProgress() {
       const total = el.scrollHeight - el.clientHeight;
       setPct(total > 0 ? scrolled / total : 0);
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scroll', onScroll, {
+      passive: true
+    });
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -292,23 +372,34 @@ function useScrollProgress() {
 }
 
 // Animated bar — fills from 0 to pct% when scrolled into view.
-function AnimatedBar({ pct }) {
+function AnimatedBar({
+  pct
+}) {
   const ref = React.useRef(null);
   const [width, setWidth] = React.useState(0);
   React.useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { setWidth(pct); io.disconnect(); }
-    }, { threshold: 0.5 });
+      if (e.isIntersecting) {
+        setWidth(pct);
+        io.disconnect();
+      }
+    }, {
+      threshold: 0.5
+    });
     io.observe(el);
     return () => io.disconnect();
   }, [pct]);
-  return (
-    <div ref={ref} className="lang-bar">
-      <i style={{ width: `${width}%`, transition: 'width 1s cubic-bezier(.2,.7,.3,1)' }} />
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    ref: ref,
+    className: "lang-bar"
+  }, /*#__PURE__*/React.createElement("i", {
+    style: {
+      width: `${width}%`,
+      transition: 'width 1s cubic-bezier(.2,.7,.3,1)'
+    }
+  }));
 }
 
 // ── Pointer FX ────────────────────────────────────────────────────────────────
@@ -331,7 +422,7 @@ function useMagnetic(strength = 0.28) {
     const el = ref.current;
     if (!el || !hoverCapable()) return;
     let raf = 0;
-    const onMove = (e) => {
+    const onMove = e => {
       if (!motionAllowed()) return;
       const r = el.getBoundingClientRect();
       const x = e.clientX - (r.left + r.width / 2);
@@ -341,7 +432,10 @@ function useMagnetic(strength = 0.28) {
         el.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
       });
     };
-    const onLeave = () => { cancelAnimationFrame(raf); el.style.transform = ''; };
+    const onLeave = () => {
+      cancelAnimationFrame(raf);
+      el.style.transform = '';
+    };
     el.addEventListener('mousemove', onMove);
     el.addEventListener('mouseleave', onLeave);
     return () => {
@@ -361,7 +455,7 @@ function useCardFx(maxTilt = 7) {
     const el = ref.current;
     if (!el || !hoverCapable()) return;
     let raf = 0;
-    const onMove = (e) => {
+    const onMove = e => {
       const r = el.getBoundingClientRect();
       const px = (e.clientX - r.left) / r.width;
       const py = (e.clientY - r.top) / r.height;
@@ -370,11 +464,13 @@ function useCardFx(maxTilt = 7) {
       if (!motionAllowed()) return;
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        el.style.transform =
-          `perspective(900px) rotateX(${(0.5 - py) * maxTilt}deg) rotateY(${(px - 0.5) * maxTilt}deg)`;
+        el.style.transform = `perspective(900px) rotateX(${(0.5 - py) * maxTilt}deg) rotateY(${(px - 0.5) * maxTilt}deg)`;
       });
     };
-    const onLeave = () => { cancelAnimationFrame(raf); el.style.transform = ''; };
+    const onLeave = () => {
+      cancelAnimationFrame(raf);
+      el.style.transform = '';
+    };
     el.addEventListener('mousemove', onMove);
     el.addEventListener('mouseleave', onLeave);
     return () => {
@@ -387,21 +483,31 @@ function useCardFx(maxTilt = 7) {
 }
 
 // Magnetic — drop-in wrapper that makes any element magnetic.
-function Magnetic({ as = 'a', strength = 0.28, children, ...rest }) {
+function Magnetic({
+  as = 'a',
+  strength = 0.28,
+  children,
+  ...rest
+}) {
   const ref = useMagnetic(strength);
   const Tag = as;
-  return <Tag ref={ref} {...rest}>{children}</Tag>;
+  return /*#__PURE__*/React.createElement(Tag, _extends({
+    ref: ref
+  }, rest), children);
 }
 
 // ── Konami code listener ──────────────────────────────────────────────────────
 function useKonami(onTrigger) {
   React.useEffect(() => {
-    const SEQ = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+    const SEQ = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
     let idx = 0;
-    const onKey = (e) => {
+    const onKey = e => {
       if (e.key === SEQ[idx]) {
         idx++;
-        if (idx === SEQ.length) { idx = 0; onTrigger(); }
+        if (idx === SEQ.length) {
+          idx = 0;
+          onTrigger();
+        }
       } else {
         idx = e.key === SEQ[0] ? 1 : 0;
       }
@@ -412,17 +518,27 @@ function useKonami(onTrigger) {
 }
 
 // ── Konami easter egg overlay ─────────────────────────────────────────────────
-function KonamiEgg({ onDone }) {
-  const LINES = [
-    { text: '> KONAMI CODE ACCEPTED',       accent: false },
-    { text: '> UNLOCKING: hire-luka.exe',   accent: false },
-    { text: '> [████████████████] 100%',    accent: false },
-    { text: '> STATUS: AVAILABLE FOR HIRE', accent: true  },
-    { text: '> djelosevicluka002@gmail.com', accent: true },
-  ];
+function KonamiEgg({
+  onDone
+}) {
+  const LINES = [{
+    text: '> KONAMI CODE ACCEPTED',
+    accent: false
+  }, {
+    text: '> UNLOCKING: hire-luka.exe',
+    accent: false
+  }, {
+    text: '> [████████████████] 100%',
+    accent: false
+  }, {
+    text: '> STATUS: AVAILABLE FOR HIRE',
+    accent: true
+  }, {
+    text: '> djelosevicluka002@gmail.com',
+    accent: true
+  }];
   const [shown, setShown] = React.useState(0);
   const [exiting, setExiting] = React.useState(false);
-
   React.useEffect(() => {
     LINES.forEach((_, i) => setTimeout(() => setShown(i + 1), i * 240));
     const exitAt = LINES.length * 240 + 1600;
@@ -430,42 +546,46 @@ function KonamiEgg({ onDone }) {
     setTimeout(onDone, exitAt + 420);
     // eslint-disable-next-line
   }, []);
-
-  return (
-    <div style={{
-      position: 'fixed', inset: 0, zIndex: 9500,
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'fixed',
+      inset: 0,
+      zIndex: 9500,
       background: 'rgba(8,9,11,0.93)',
       backdropFilter: 'blur(6px)',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
       opacity: exiting ? 0 : 1,
-      transition: 'opacity .42s ease',
-    }}>
-      <div style={{
-        border: '1px solid var(--accent)',
-        borderRadius: 12,
-        padding: 'clamp(24px, 6vw, 40px) clamp(20px, 7vw, 52px)',
-        boxShadow: '0 0 48px var(--accent-soft), inset 0 0 0 1px var(--accent-soft)',
-        fontFamily: 'var(--mono)',
-        fontSize: 15,
-        lineHeight: 2.2,
-        minWidth: 'min(360px, calc(100vw - 48px))',
-        overflowWrap: 'anywhere',
-      }}>
-        {LINES.slice(0, shown).map((l, i) => (
-          <div key={i} style={{ color: l.accent ? 'var(--accent)' : 'var(--text)' }}>{l.text}</div>
-        ))}
-        {shown < LINES.length && <span className="term-cursor" />}
-      </div>
-    </div>
-  );
+      transition: 'opacity .42s ease'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      border: '1px solid var(--accent)',
+      borderRadius: 12,
+      padding: 'clamp(24px, 6vw, 40px) clamp(20px, 7vw, 52px)',
+      boxShadow: '0 0 48px var(--accent-soft), inset 0 0 0 1px var(--accent-soft)',
+      fontFamily: 'var(--mono)',
+      fontSize: 15,
+      lineHeight: 2.2,
+      minWidth: 'min(360px, calc(100vw - 48px))',
+      overflowWrap: 'anywhere'
+    }
+  }, LINES.slice(0, shown).map((l, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    style: {
+      color: l.accent ? 'var(--accent)' : 'var(--text)'
+    }
+  }, l.text)), shown < LINES.length && /*#__PURE__*/React.createElement("span", {
+    className: "term-cursor"
+  })));
 }
 
 // ── Confetti canvas ───────────────────────────────────────────────────────────
 function ConfettiCanvas() {
   const canvasRef = React.useRef(null);
-  const particles  = React.useRef([]);
-  const raf        = React.useRef(0);
-
+  const particles = React.useRef([]);
+  const raf = React.useRef(0);
   function loop() {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -473,8 +593,10 @@ function ConfettiCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const alive = [];
     for (const p of particles.current) {
-      p.x += p.vx; p.y += p.vy;
-      p.vy += 0.28; p.vx *= 0.99;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.28;
+      p.vx *= 0.99;
       p.rot += p.rotV;
       p.life -= p.decay;
       if (p.life <= 0) continue;
@@ -490,13 +612,16 @@ function ConfettiCanvas() {
     particles.current = alive;
     if (alive.length) raf.current = requestAnimationFrame(loop);
   }
-
   React.useEffect(() => {
     const canvas = canvasRef.current;
-    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
     resize();
-    window.addEventListener('resize', resize, { passive: true });
-
+    window.addEventListener('resize', resize, {
+      passive: true
+    });
     window.fireConfetti = (x, y) => {
       const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#c5ff36';
       const palette = [accent, '#ffffff', accent + 'bb', 'rgba(255,255,255,0.7)'];
@@ -504,7 +629,8 @@ function ConfettiCanvas() {
         const angle = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.4;
         const speed = 4 + Math.random() * 9;
         particles.current.push({
-          x, y,
+          x,
+          y,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
           rot: Math.random() * Math.PI * 2,
@@ -513,21 +639,43 @@ function ConfettiCanvas() {
           h: 3 + Math.random() * 4,
           life: 1,
           decay: 0.011 + Math.random() * 0.015,
-          color: palette[Math.floor(Math.random() * palette.length)],
+          color: palette[Math.floor(Math.random() * palette.length)]
         });
       }
       cancelAnimationFrame(raf.current);
       raf.current = requestAnimationFrame(loop);
     };
-
     return () => {
       window.removeEventListener('resize', resize);
       delete window.fireConfetti;
       cancelAnimationFrame(raf.current);
     };
   }, []);
-
-  return <canvas ref={canvasRef} style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 9490 }} />;
+  return /*#__PURE__*/React.createElement("canvas", {
+    ref: canvasRef,
+    style: {
+      position: 'fixed',
+      inset: 0,
+      pointerEvents: 'none',
+      zIndex: 9490
+    }
+  });
 }
-
-Object.assign(window, { useScramble, Scramble, Typewriter, Reveal, Counter, BootSequence, LiveClock, useActiveSection, useMagnetic, useCardFx, Magnetic, useScrollProgress, AnimatedBar, useKonami, KonamiEgg, ConfettiCanvas });
+Object.assign(window, {
+  useScramble,
+  Scramble,
+  Typewriter,
+  Reveal,
+  Counter,
+  BootSequence,
+  LiveClock,
+  useActiveSection,
+  useMagnetic,
+  useCardFx,
+  Magnetic,
+  useScrollProgress,
+  AnimatedBar,
+  useKonami,
+  KonamiEgg,
+  ConfettiCanvas
+});

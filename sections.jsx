@@ -165,7 +165,7 @@ function MiniShell() {
           onKeyDown={onKeyDown}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          style={{ position: 'absolute', opacity: 0, inset: 0, cursor: 'text' }}
+          style={{ position: 'absolute', opacity: 0, inset: 0, cursor: 'text', fontSize: 16 }}
           autoComplete="off" autoCorrect="off" spellCheck={false}
           aria-label="terminal input"
         />
