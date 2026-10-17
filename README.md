@@ -4,7 +4,7 @@ Live at: [lukaftnkm.github.io](https://lukaftnkm.github.io)
 
 ## Overview
 
-Personal portfolio website for Luka Đelošević — Master's student in Electrical & Computer Engineering, co-founder of [Sokolus](https://sokolus.rs) and [TripVice](https://tripvice.net), InnovNation Serbia 2025 winner, and Web Summit Qatar 2026 speaker.
+Personal portfolio website for Luka Đelošević — Electrical & Computer Engineer (MSc), engineer at MTS d.o.o., co-founder of [Sokolus](https://sokolus.rs) and [TripVice](https://tripvice.net), InnovNation Serbia 2025 winner, and Web Summit Qatar 2026 speaker.
 
 Dark terminal aesthetic: lime phosphor accent on near-black, JetBrains Mono throughout, with a boot sequence, an interactive mini-shell, and a user-tweakable accent/font/motion panel.
 
@@ -35,7 +35,7 @@ Dark terminal aesthetic: lime phosphor accent on near-black, JetBrains Mono thro
 2. **Projects** `01` — Sokolus and TripVice side by side
 3. **Recognition** `02` — InnovNation 2025 award + languages
 4. **About** `03` — background, interactive shell, stats
-5. **Education** `04` — BSc → Erasmus (Universidad de Vigo) → MSc timeline
+5. **Education** `04` — BSc → Erasmus (Universidad de Vigo) → MSc (with thesis) timeline
 6. **Certificates** `05` — trainings, certificates, and programs (linked PDFs)
 7. **Contact** `06` — email, phone, LinkedIn, GitHub, startups
 

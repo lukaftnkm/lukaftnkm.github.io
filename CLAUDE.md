@@ -7,7 +7,7 @@ Single-page personal portfolio for **Luka Đelošević** hosted on GitHub Pages 
 ## Owner
 
 - **Name:** Luka Đelošević
-- **Role:** MSc ECE student + co-founder of Sokolus & TripVice
+- **Role:** MSc ECE graduate; engineer at MTS d.o.o. + co-founder of Sokolus & TripVice
 - **Email:** djelosevicluka002@gmail.com
 - **Phone:** +381 65 861 0815
 - **GitHub:** lukaftnkm
@@ -21,7 +21,8 @@ Single-page personal portfolio for **Luka Đelošević** hosted on GitHub Pages 
 - Startup 2: **TripVice** — smart trip finder for budget travelers (flights + hotels + activities + eSIMs); built by **BLDxp** (Bogdan, Luka, Djordje); live at tripvice.net and bldxp.pages.dev
 - Award: **1st place, InnovNation Serbia 2025** (Student Teams category)
 - Event: **Web Summit Qatar 2026** speaker/pitcher
-- Degree progress: BSc completed 2025 (240 ECTS, GPA 8.09, module Computing & Informatics); MSc in progress 2025–present
+- Degree progress: BSc completed 2025 (240 ECTS, GPA 8.09, module Computing & Informatics); MSc completed (2025–2026), thesis **"Softverski sistem za analizu e-uprave"** (Software system for e-government analysis)
+- Employment: **MTS d.o.o., Kosovska Mitrovica** — Engineer for Planning, Development and Investment Construction (contract signed 14.10.2026)
 - Certificates: 3× EIT Higher Education Initiative trainings (2025), SoftUni JavaScript (2024), BSc Diploma; InteRussia program (Novosibirsk, AI in Medicine)
 
 ## Architecture (no bundler; one Babel compile step)

@@ -10,7 +10,7 @@ Recruiters and hiring managers first; investors, startup contacts, and event org
 
 ## Product Purpose
 
-Personal portfolio for Luka Đelošević: MSc ECE student, co-founder & CPO of Sokolus, co-founder of BLDxp (TripVice), InnovNation Serbia 2025 winner, Web Summit Qatar 2026 speaker. Success means a recruiter or partner reaches the contact section convinced of technical skill and initiative, then reaches out.
+Personal portfolio for Luka Đelošević: MSc ECE graduate, engineer at MTS d.o.o. (Kosovska Mitrovica), co-founder & CPO of Sokolus, co-founder of BLDxp (TripVice), InnovNation Serbia 2025 winner, Web Summit Qatar 2026 speaker. Success means a recruiter or partner reaches the contact section convinced of technical skill and initiative, then reaches out.
 
 ## Brand Personality
 

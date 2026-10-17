@@ -17,8 +17,8 @@ function SectionHead({
 // ── Mini shell ────────────────────────────────────────────────────────────────
 const SHELL_COMMANDS = {
   help: () => ['  whoami          who is Luka', '  about           background & mission', '  projects        Sokolus + TripVice', '  contact         get in touch', '  skills          tech stack', '  sudo hire-luka  (self-explanatory)', '  clear           reset terminal'],
-  whoami: () => ['Luka Đelošević — MSc ECE, co-founder, innovator.'],
-  about: () => ["Master's student @ FTN Pristina, Serbia.", 'Erasmus exchange @ Universidad de Vigo, Spain.', '1st place — InnovNation Serbia 2025.', 'Speaker @ Web Summit Qatar 2026.', 'Co-founder of Sokolus & BLDxp.'],
+  whoami: () => ['Luka Đelošević — MSc ECE, engineer @ MTS, co-founder.'],
+  about: () => ['Engineer @ MTS d.o.o., Kosovska Mitrovica.', 'MSc ECE graduate @ FTN Pristina, Serbia.', 'Erasmus exchange @ Universidad de Vigo, Spain.', '1st place — InnovNation Serbia 2025.', 'Speaker @ Web Summit Qatar 2026.', 'Co-founder of Sokolus & BLDxp.'],
   projects: () => ['→ Sokolus    sokolus.rs', '  Award-winning platform (ikuDev, team of 3).', '→ TripVice   tripvice.net', '  Smart trip finder (BLDxp: Bogdan, Luka, Djordje).'],
   contact: () => ['email      djelosevicluka002@gmail.com', 'linkedin   luka-djelosevic', 'github     lukaftnkm'],
   skills: () => ['languages   Python · JavaScript · C · Java', 'web         React · HTML · CSS · Node.js', 'tools       Git · Linux · Figma'],
@@ -237,7 +237,7 @@ function About() {
   }, /*#__PURE__*/React.createElement(Reveal, {
     className: "about-prose",
     delay: 2
-  }, /*#__PURE__*/React.createElement("p", null, "I'm a ", /*#__PURE__*/React.createElement("strong", null, "Master's student in Electrical & Computer Engineering"), " at the Faculty of Technical Sciences, University of Pristina, with a focus on software development and modern web technologies."), /*#__PURE__*/React.createElement("p", null, "My path took me through an ", /*#__PURE__*/React.createElement("strong", null, "Erasmus year at Universidad de Vigo"), " in Spain, then to ", /*#__PURE__*/React.createElement("strong", null, "winning Serbia's national innovation competition"), ", and onto the global stage as a speaker at ", /*#__PURE__*/React.createElement("strong", null, "Web Summit Qatar 2026"), "."), /*#__PURE__*/React.createElement("p", null, "Today I'm a ", /*#__PURE__*/React.createElement("strong", null, "co-founder & CPO at Sokolus"), ", turning our award-winning idea into a real product alongside two engineers, and a", /*#__PURE__*/React.createElement("strong", null, " co-founder of BLDxp"), ", the team behind TripVice. I believe engineering talent plus entrepreneurial thinking builds things that matter.")), /*#__PURE__*/React.createElement(Reveal, {
+  }, /*#__PURE__*/React.createElement("p", null, "I hold a ", /*#__PURE__*/React.createElement("strong", null, "Master's degree in Electrical & Computer Engineering"), " from the Faculty of Technical Sciences, University of Pristina, with a focus on software development and modern web technologies. I wrote my master's thesis on a ", /*#__PURE__*/React.createElement("strong", null, "software system for e-government analysis"), "."), /*#__PURE__*/React.createElement("p", null, "My path took me through an ", /*#__PURE__*/React.createElement("strong", null, "Erasmus year at Universidad de Vigo"), " in Spain, then to ", /*#__PURE__*/React.createElement("strong", null, "winning Serbia's national innovation competition"), ", and onto the global stage as a speaker at ", /*#__PURE__*/React.createElement("strong", null, "Web Summit Qatar 2026"), "."), /*#__PURE__*/React.createElement("p", null, "In October 2026 I joined ", /*#__PURE__*/React.createElement("strong", null, "MTS d.o.o."), " in Kosovska Mitrovica as an", ' ', /*#__PURE__*/React.createElement("strong", null, "engineer for planning, development & investment construction"), ". Alongside that, I'm a ", /*#__PURE__*/React.createElement("strong", null, "co-founder & CPO at Sokolus"), ", turning our award-winning idea into a real product alongside two engineers, and a", /*#__PURE__*/React.createElement("strong", null, " co-founder of BLDxp"), ", the team behind TripVice. I believe engineering talent plus entrepreneurial thinking builds things that matter.")), /*#__PURE__*/React.createElement(Reveal, {
     className: "term",
     delay: 3
   }, /*#__PURE__*/React.createElement("div", {
@@ -614,11 +614,14 @@ function Education() {
     return () => io.disconnect();
   }, []);
   const items = [{
-    year: '2025 — PRESENT',
+    year: '2025 — 2026',
     title: 'MSc Electrical & Computer Engineering',
     place: 'Faculty of Technical Sciences, University of Pristina',
-    tag: 'Software Engineering · CS Focus',
-    current: true
+    thesis: {
+      title: 'Softverski sistem za analizu e-uprave',
+      en: 'Software system for e-government analysis'
+    },
+    tag: 'Software Engineering · CS Focus'
   }, {
     year: '2025',
     title: 'Erasmus Exchange — Universidad de Vigo',
@@ -659,7 +662,13 @@ function Education() {
     className: "tl-title"
   }, it.title), /*#__PURE__*/React.createElement("p", {
     className: "tl-place"
-  }, it.place), /*#__PURE__*/React.createElement("span", {
+  }, it.place), it.thesis && /*#__PURE__*/React.createElement("p", {
+    className: "tl-thesis"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "k"
+  }, "thesis"), " \u201C", it.thesis.title, "\u201D", /*#__PURE__*/React.createElement("span", {
+    className: "en"
+  }, it.thesis.en)), /*#__PURE__*/React.createElement("span", {
     className: "tl-tag"
   }, it.tag))))));
 }

@@ -82,7 +82,7 @@ function Hero() {
     className: "hero-meta reveal in"
   }, /*#__PURE__*/React.createElement("span", {
     className: "badge"
-  }, "v2026"), /*#__PURE__*/React.createElement("span", null, "Electrical & Computer Engineer \xB7 CPO @ Sokolus")), /*#__PURE__*/React.createElement("h1", {
+  }, "v2026"), /*#__PURE__*/React.createElement("span", null, "Engineer @ MTS d.o.o. \xB7 CPO @ Sokolus")), /*#__PURE__*/React.createElement("h1", {
     className: "hero-name reveal in"
   }, "Luka \u0110", /*#__PURE__*/React.createElement("span", {
     className: "dot"
@@ -106,7 +106,7 @@ function Hero() {
     }
   })), /*#__PURE__*/React.createElement("p", {
     className: "hero-tag reveal in"
-  }, "Master's student, ", /*#__PURE__*/React.createElement("strong", null, "award-winning innovator"), ", and co-founder building the future at the intersection of engineering and entrepreneurship."), /*#__PURE__*/React.createElement("div", {
+  }, "Electrical & computer engineer (MSc), ", /*#__PURE__*/React.createElement("strong", null, "award-winning innovator"), ", and co-founder building the future at the intersection of engineering and entrepreneurship."), /*#__PURE__*/React.createElement("div", {
     className: "hero-chips reveal in"
   }, /*#__PURE__*/React.createElement("span", {
     className: "chip"
@@ -116,7 +116,7 @@ function Hero() {
     className: "chip"
   }, "TripVice \xB7 BLDxp"), /*#__PURE__*/React.createElement("span", {
     className: "chip"
-  }, "MSc ECE \u2014 In Progress")), /*#__PURE__*/React.createElement("div", {
+  }, "MSc ECE \u2014 Completed")), /*#__PURE__*/React.createElement("div", {
     className: "hero-cta reveal in"
   }, /*#__PURE__*/React.createElement(Magnetic, {
     as: "a",
@@ -179,7 +179,7 @@ function Hero() {
   })), /*#__PURE__*/React.createElement("span", {
     className: "term-line"
   }, /*#__PURE__*/React.createElement(Typewriter, {
-    text: "MSc ECE @ FTN Pristina",
+    text: "Engineer @ MTS d.o.o.",
     speed: 20,
     startDelay: 1900
   })), /*#__PURE__*/React.createElement("span", {
@@ -201,15 +201,21 @@ function Hero() {
   })), /*#__PURE__*/React.createElement("span", {
     className: "term-line"
   }, /*#__PURE__*/React.createElement(Typewriter, {
-    text: "\u2713 InnovNation 2025 \u2014 1st Place",
+    text: "\u2713 MSc ECE \u2014 FTN Pristina",
     speed: 18,
     startDelay: 3900
   })), /*#__PURE__*/React.createElement("span", {
     className: "term-line"
   }, /*#__PURE__*/React.createElement(Typewriter, {
-    text: "\u2713 Web Summit Qatar 2026",
+    text: "\u2713 InnovNation 2025 \u2014 1st Place",
     speed: 18,
     startDelay: 4500
+  })), /*#__PURE__*/React.createElement("span", {
+    className: "term-line"
+  }, /*#__PURE__*/React.createElement(Typewriter, {
+    text: "\u2713 Web Summit Qatar 2026",
+    speed: 18,
+    startDelay: 5100
   })), /*#__PURE__*/React.createElement("span", {
     className: "term-line"
   }, "\xA0"), /*#__PURE__*/React.createElement("span", {
@@ -217,7 +223,7 @@ function Hero() {
   }, /*#__PURE__*/React.createElement(Typewriter, {
     text: "Building Sokolus v1...",
     speed: 22,
-    startDelay: 5100,
+    startDelay: 5700,
     cursor: true
   }))))), /*#__PURE__*/React.createElement("div", {
     style: {

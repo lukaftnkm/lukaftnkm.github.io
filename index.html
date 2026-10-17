@@ -4,10 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Luka Đelošević — ECE Engineer &amp; Innovator</title>
-  <meta name="description" content="Luka Đelošević — Master's student in Electrical & Computer Engineering, co-founder of Sokolus, InnovNation Serbia 2025 winner, and Web Summit Qatar 2026 speaker." />
+  <meta name="description" content="Luka Đelošević — Electrical & Computer Engineer (MSc) at MTS d.o.o., co-founder of Sokolus, InnovNation Serbia 2025 winner, and Web Summit Qatar 2026 speaker." />
   <meta name="theme-color" content="#08090b" />
   <meta property="og:title" content="Luka Đelošević — ECE Engineer &amp; Innovator" />
-  <meta property="og:description" content="MSc ECE student, co-founder of Sokolus & TripVice, InnovNation Serbia 2025 winner, Web Summit Qatar 2026 speaker." />
+  <meta property="og:description" content="MSc ECE, engineer at MTS d.o.o., co-founder of Sokolus & TripVice, InnovNation Serbia 2025 winner, Web Summit Qatar 2026 speaker." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://lukaftnkm.github.io/" />
   <meta property="og:image" content="https://lukaftnkm.github.io/images/og-card.png" />
@@ -251,7 +251,9 @@
       grid-template-columns: 1fr 1fr;
       gap: 48px;
       align-items: center;
-      padding: 60px 0 40px;
+      /* top/bottom only — a shorthand here would wipe .container's side gutter */
+      padding-top: 60px;
+      padding-bottom: 40px;
     }
     @media (max-width: 980px) {
       .hero-grid { grid-template-columns: 1fr; gap: 40px; padding-top: 40px; }
@@ -685,6 +687,26 @@
       font-size: 14px;
       color: var(--text-dim);
       margin: 0 0 12px;
+    }
+    .tl-thesis {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text);
+      margin: 0 0 14px;
+      max-width: 56ch;
+    }
+    .tl-thesis .k {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-right: 6px;
+    }
+    .tl-thesis .en {
+      display: block;
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 2px;
     }
     .tl-tag {
       display: inline-block;

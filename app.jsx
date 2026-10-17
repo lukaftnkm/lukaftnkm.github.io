@@ -53,7 +53,7 @@ function Hero() {
         <div>
           <div className="hero-meta reveal in">
             <span className="badge">v2026</span>
-            <span>Electrical &amp; Computer Engineer · CPO @ Sokolus</span>
+            <span>Engineer @ MTS d.o.o. · CPO @ Sokolus</span>
           </div>
           <h1 className="hero-name reveal in">
             Luka Đ<span className="dot">.</span>
@@ -63,14 +63,14 @@ function Hero() {
             <Scramble text={rotating[idx]} style={{ color: 'var(--accent)' }} />
           </div>
           <p className="hero-tag reveal in">
-            Master's student, <strong>award-winning innovator</strong>, and co-founder
+            Electrical &amp; computer engineer (MSc), <strong>award-winning innovator</strong>, and co-founder
             building the future at the intersection of engineering and entrepreneurship.
           </p>
           <div className="hero-chips reveal in">
             <span className="chip">InnovNation '25 Winner</span>
             <span className="chip">Web Summit Qatar '26</span>
             <span className="chip">TripVice · BLDxp</span>
-            <span className="chip">MSc ECE — In Progress</span>
+            <span className="chip">MSc ECE — Completed</span>
           </div>
           <div className="hero-cta reveal in">
             <Magnetic as="a" className="btn btn-primary" href="#projects">
@@ -105,7 +105,7 @@ function Hero() {
               <span className="prompt">$</span> <Typewriter text="cat status.txt" speed={45} startDelay={1100} />
             </span>
             <span className="term-line">
-              <Typewriter text="MSc ECE @ FTN Pristina" speed={20} startDelay={1900} />
+              <Typewriter text="Engineer @ MTS d.o.o." speed={20} startDelay={1900} />
             </span>
             <span className="term-line">
               <Typewriter text="Co-founder & CPO @ Sokolus" speed={20} startDelay={2400} />
@@ -115,14 +115,17 @@ function Hero() {
               <span className="prompt">$</span> <Typewriter text="cat achievements.log" speed={45} startDelay={3000} />
             </span>
             <span className="term-line">
-              <Typewriter text="✓ InnovNation 2025 — 1st Place" speed={18} startDelay={3900} />
+              <Typewriter text="✓ MSc ECE — FTN Pristina" speed={18} startDelay={3900} />
             </span>
             <span className="term-line">
-              <Typewriter text="✓ Web Summit Qatar 2026" speed={18} startDelay={4500} />
+              <Typewriter text="✓ InnovNation 2025 — 1st Place" speed={18} startDelay={4500} />
+            </span>
+            <span className="term-line">
+              <Typewriter text="✓ Web Summit Qatar 2026" speed={18} startDelay={5100} />
             </span>
             <span className="term-line">&nbsp;</span>
             <span className="term-line">
-              <Typewriter text="Building Sokolus v1..." speed={22} startDelay={5100} cursor={true} />
+              <Typewriter text="Building Sokolus v1..." speed={22} startDelay={5700} cursor={true} />
             </span>
           </div>
         </div>

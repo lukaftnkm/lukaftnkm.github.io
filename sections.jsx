@@ -21,9 +21,10 @@ const SHELL_COMMANDS = {
     '  sudo hire-luka  (self-explanatory)',
     '  clear           reset terminal',
   ],
-  whoami: () => ['Luka Đelošević — MSc ECE, co-founder, innovator.'],
+  whoami: () => ['Luka Đelošević — MSc ECE, engineer @ MTS, co-founder.'],
   about: () => [
-    "Master's student @ FTN Pristina, Serbia.",
+    'Engineer @ MTS d.o.o., Kosovska Mitrovica.',
+    'MSc ECE graduate @ FTN Pristina, Serbia.',
     'Erasmus exchange @ Universidad de Vigo, Spain.',
     '1st place — InnovNation Serbia 2025.',
     'Speaker @ Web Summit Qatar 2026.',
@@ -186,9 +187,10 @@ function About() {
         <div className="about-grid">
           <Reveal className="about-prose" delay={2}>
             <p>
-              I'm a <strong>Master's student in Electrical &amp; Computer Engineering</strong> at
+              I hold a <strong>Master's degree in Electrical &amp; Computer Engineering</strong> from
               the Faculty of Technical Sciences, University of Pristina, with a focus on
-              software development and modern web technologies.
+              software development and modern web technologies. I wrote my master's thesis
+              on a <strong>software system for e-government analysis</strong>.
             </p>
             <p>
               My path took me through an <strong>Erasmus year at Universidad de Vigo</strong> in
@@ -196,7 +198,9 @@ function About() {
               and onto the global stage as a speaker at <strong>Web Summit Qatar 2026</strong>.
             </p>
             <p>
-              Today I'm a <strong>co-founder &amp; CPO at Sokolus</strong>, turning our
+              In October 2026 I joined <strong>MTS d.o.o.</strong> in Kosovska Mitrovica as an{' '}
+              <strong>engineer for planning, development &amp; investment construction</strong>.
+              Alongside that, I'm a <strong>co-founder &amp; CPO at Sokolus</strong>, turning our
               award-winning idea into a real product alongside two engineers, and a
               <strong> co-founder of BLDxp</strong>, the team behind TripVice. I believe
               engineering talent plus entrepreneurial thinking builds things that matter.
@@ -427,11 +431,11 @@ function Education() {
   }, []);
   const items = [
     {
-      year: '2025 — PRESENT',
+      year: '2025 — 2026',
       title: 'MSc Electrical & Computer Engineering',
       place: 'Faculty of Technical Sciences, University of Pristina',
+      thesis: { title: 'Softverski sistem za analizu e-uprave', en: 'Software system for e-government analysis' },
       tag: 'Software Engineering · CS Focus',
-      current: true,
     },
     {
       year: '2025',
@@ -459,6 +463,12 @@ function Education() {
               <div className="tl-year">{it.year}</div>
               <h3 className="tl-title">{it.title}</h3>
               <p className="tl-place">{it.place}</p>
+              {it.thesis && (
+                <p className="tl-thesis">
+                  <span className="k">thesis</span> “{it.thesis.title}”
+                  <span className="en">{it.thesis.en}</span>
+                </p>
+              )}
               <span className="tl-tag">{it.tag}</span>
             </Reveal>
           ))}
